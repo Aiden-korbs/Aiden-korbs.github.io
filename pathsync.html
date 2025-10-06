@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PathSync: Timeline Proximity Analyzer</title>
+    <title>PathSync: See where you crossed paths</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,7 @@
             <div class="lg:col-span-2 space-y-8">
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-white">PathSync</h1>
-                    <p class="text-gray-400 mt-2">Analyze Google Timeline files to find proximity events.</p>
+                    <p class="text-gray-400 mt-2">Analyse Google Timeline files to paths crossed.</p>
                 </div>
 
                 <!-- Settings Panel -->
@@ -87,7 +87,7 @@
 
                 <!-- Results Panel -->
                 <div id="results-container" class="space-y-6 pt-8 border-t border-gray-700/50 hidden">
-                    <h2 class="text-3xl font-bold text-center text-white">Analysis Results</h2>
+                    <h2 class="text-3xl font-bold text-center text-white">Results</h2>
                     <div id="status" class="text-center text-gray-400 p-4 bg-gray-800/50 rounded-lg border border-gray-700/80"></div>
                     <p id="summary" class="text-center font-medium text-lg"></p>
                     <div id="closest-match-card" class="bg-gray-800/50 border border-gray-700/80 rounded-xl p-6 space-y-4 hidden">
@@ -112,7 +112,7 @@
                                 <h4 class="font-semibold text-gray-200">Method 1: Google Takeout (Desktop)</h4>
                                 <ol class="list-decimal list-inside mt-2 space-y-1">
                                     <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-rose-500 hover:underline">Google Takeout</a> website.</li>
-                                    <li>Click "Deselect all", then scroll and select "Location History".</li>
+                                    <li>Click "Deselect all", then scroll and select "Timeline".</li>
                                     <li>Ensure the format is JSON, then "Create export".</li>
                                 </ol>
                             </div>
