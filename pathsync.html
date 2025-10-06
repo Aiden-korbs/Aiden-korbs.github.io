@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
-    <title>PathSync: Seeing Whether You Crossed Paths</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PathSync: Timeline Proximity Analyzer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +20,10 @@
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+        /* Style for date input placeholder */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8);
         }
     </style>
 </head>
@@ -40,26 +44,36 @@
             <div class="lg:col-span-2 space-y-8">
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-white">PathSync</h1>
-                    <p class="text-gray-400 mt-2">Analyze Google Timeline files to find closest crossed paths.</p>
+                    <p class="text-gray-400 mt-2">Analyze Google Timeline files to find proximity events.</p>
                 </div>
 
                 <!-- Settings Panel -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-gray-700/50">
-                    <div class="md:col-span-2 space-y-4">
-                        <h2 class="text-lg font-semibold text-gray-200">1. Upload Timeline Files</h2>
+                <div class="space-y-8 pt-8 border-t border-gray-700/50">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-200 mb-4">1. Upload Timeline Files</h2>
                         <div id="file-inputs" class="space-y-3"></div>
-                        <button id="add-file-btn" class="w-full text-sm font-medium text-rose-500 hover:text-rose-400 transition">+ Add Another File</button>
+                        <button id="add-file-btn" class="w-full mt-3 text-sm font-medium text-rose-500 hover:text-rose-400 transition">+ Add Another File</button>
                     </div>
                     
-                    <div class="space-y-4">
-                        <h2 class="text-lg font-semibold text-gray-200">2. Set Thresholds</h2>
-                        <div>
-                            <label for="distance" class="block text-sm font-medium text-gray-400">Distance (meters)</label>
-                            <input type="number" id="distance" value="100" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
-                        </div>
-                        <div>
-                            <label for="time" class="block text-sm font-medium text-gray-400">Time (minutes)</label>
-                            <input type="number" id="time" value="2" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-200 mb-4">2. Set Filters & Thresholds</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="start-date" class="block text-sm font-medium text-gray-400">Start Date</label>
+                                <input type="date" id="start-date" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="end-date" class="block text-sm font-medium text-gray-400">End Date</label>
+                                <input type="date" id="end-date" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
+                            </div>
+                             <div>
+                                <label for="distance" class="block text-sm font-medium text-gray-400">Distance (meters)</label>
+                                <input type="number" id="distance" value="100" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
+                            </div>
+                            <div>
+                                <label for="time" class="block text-sm font-medium text-gray-400">Time (minutes)</label>
+                                <input type="number" id="time" value="2" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,12 +108,11 @@
                             How to Get Your Data
                         </h3>
                         <div class="text-gray-400 text-sm space-y-4 pt-4 border-t border-gray-600">
-                            <p>You can download your data using one of two methods:</p>
-                            <div>
+                             <div>
                                 <h4 class="font-semibold text-gray-200">Method 1: Google Takeout (Desktop)</h4>
                                 <ol class="list-decimal list-inside mt-2 space-y-1">
                                     <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-rose-500 hover:underline">Google Takeout</a> website.</li>
-                                    <li>Click "Deselect all", then scroll and select "Timeline".</li>
+                                    <li>Click "Deselect all", then scroll and select "Location History".</li>
                                     <li>Ensure the format is JSON, then "Create export".</li>
                                 </ol>
                             </div>
@@ -177,15 +190,21 @@
                 runBtn.textContent = 'Run Analysis';
                 return;
             }
+            
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
 
             let processedData = {};
             for (const file of files) {
                 statusEl.textContent = `Parsing ${file.name}...`;
                 try {
                     const jsonData = JSON.parse(await file.text());
-                    const events = parseTimelineData(jsonData);
-                    if (events.length > 0) processedData[file.name] = events;
-                    else statusEl.textContent += ` (Warning: No valid events found).`;
+                    const events = parseTimelineData(jsonData, startDate, endDate);
+                    if (events.length > 0) {
+                        processedData[file.name] = events;
+                    } else {
+                        statusEl.textContent += ` (Warning: No valid events found in the selected date range).`;
+                    }
                 } catch (error) {
                     statusEl.textContent = `Error processing ${file.name}: ${error.message}`;
                     runBtn.disabled = false;
@@ -255,38 +274,52 @@
             statusEl.textContent = 'Closest match details displayed below.';
         }
         
-        function parseTimelineData(jsonData) {
+        function parseTimelineData(jsonData, startDateStr, endDateStr) {
             let events = [];
+            const startDate = startDateStr ? new Date(startDateStr + 'T00:00:00Z').getTime() : null;
+            const endDate = endDateStr ? new Date(endDateStr + 'T23:59:59Z').getTime() : null;
+
+            const eventInRange = (timestamp) => {
+                if (startDate && timestamp < startDate) return false;
+                if (endDate && timestamp > endDate) return false;
+                return true;
+            };
+
             if (jsonData.semanticSegments) {
                 jsonData.semanticSegments.forEach(segment => {
-                    if (segment.timelinePath) {
-                        segment.timelinePath.forEach(point => {
-                             if (point.point && typeof point.point === 'string') {
-                                const coords = point.point.match(/[-+]?\d+\.\d+/g);
-                                if (coords && coords.length === 2) events.push({timestamp: new Date(point.time).getTime(), latitude: parseFloat(coords[0]), longitude: parseFloat(coords[1])});
-                            }
-                        });
-                    } else if (segment.visit) {
-                        const locStr = segment.visit?.topCandidate?.placeLocation;
-                        if (locStr && typeof locStr === 'string') {
-                            const coords = locStr.match(/[-+]?\d+\.\d+/g);
-                            if (coords && coords.length === 2) events.push({timestamp: new Date(segment.startTime).getTime(), latitude: parseFloat(coords[0]), longitude: parseFloat(coords[1])});
+                    const processPoint = (time, locationString) => {
+                        const timestamp = new Date(time).getTime();
+                        if (eventInRange(timestamp) && typeof locationString === 'string') {
+                            const coords = locationString.match(/[-+]?\d+\.\d+/g);
+                            if (coords && coords.length === 2) events.push({timestamp, latitude: parseFloat(coords[0]), longitude: parseFloat(coords[1])});
                         }
+                    };
+
+                    if (segment.timelinePath) {
+                        segment.timelinePath.forEach(point => processPoint(point.time, point.point));
+                    } else if (segment.visit) {
+                        processPoint(segment.startTime, segment.visit?.topCandidate?.placeLocation);
                     }
                 });
             }
             else if (Array.isArray(jsonData)) {
                 jsonData.forEach(item => {
-                    const locStr = item.visit?.topCandidate?.placeLocation;
-                    if (locStr && typeof locStr === 'string') {
-                        const coords = locStr.match(/[-+]?\d+\.\d+/g);
-                        if (coords && coords.length === 2) events.push({timestamp: new Date(item.startTime).getTime(), latitude: parseFloat(coords[0]), longitude: parseFloat(coords[1])});
+                    const timestamp = new Date(item.startTime).getTime();
+                    if (eventInRange(timestamp)) {
+                         const locStr = item.visit?.topCandidate?.placeLocation;
+                         if (locStr && typeof locStr === 'string') {
+                            const coords = locStr.match(/[-+]?\d+\.\d+/g);
+                            if (coords && coords.length === 2) events.push({timestamp, latitude: parseFloat(coords[0]), longitude: parseFloat(coords[1])});
+                        }
                     }
                 });
             }
             else if (jsonData.locations) {
                 jsonData.locations.forEach(loc => {
-                    if (loc.latitudeE7 && loc.longitudeE7) events.push({timestamp: new Date(loc.timestamp).getTime(), latitude: loc.latitudeE7 / 1e7, longitude: loc.longitudeE7 / 1e7});
+                    const timestamp = new Date(loc.timestamp).getTime();
+                    if (eventInRange(timestamp) && loc.latitudeE7 && loc.longitudeE7) {
+                        events.push({timestamp, latitude: loc.latitudeE7 / 1e7, longitude: loc.longitudeE7 / 1e7});
+                    }
                 });
             }
             return events.sort((a, b) => a.timestamp - b.timestamp);
