@@ -226,7 +226,20 @@
                 if (!response.ok) throw new Error(`GitHub API Error: ${response.status}`);
                 const data = await response.json();
                 
-                const markdownContent = atob(data.content);
+                // Decode Base64 (atob) to a byte string
+                const binaryString = atob(data.content);
+                // Get the length of the byte string
+                const len = binaryString.length;
+                // Create a an array of 8-bit unsigned integers
+                const bytes = new Uint8Array(len);
+                // Populate the array with the character codes of the byte string
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                // Decode the UTF-8 bytes into a proper string
+                const textDecoder = new TextDecoder('utf-8');
+                const markdownContent = textDecoder.decode(bytes);
+                
                 noteViewerContent.innerHTML = showdownConverter.makeHtml(markdownContent);
             } catch (error) {
                 console.error("Error fetching file:", error);
@@ -299,14 +312,62 @@
                 // Sort folder names using natural sort, putting 'root' first
                 const sortedFolders = Object.keys(groupedFiles).sort(naturalSort);
 
+                // --- NEW: Find and remove common root folder path ---
+                let commonPrefix = '';
+                const nonRootFolders = sortedFolders.filter(f => f !== 'root');
+                if (nonRootFolders.length > 1) {
+                    // Find the common prefix among all non-root folders
+                    const firstFolder = nonRootFolders[0];
+                    let i = 0;
+                    while (i < firstFolder.length) {
+                        const char = firstFolder[i];
+                        if (!nonRootFolders.every(f => f[i] === char)) {
+                            break;
+                        }
+                        i++;
+                    }
+                    commonPrefix = firstFolder.substring(0, i);
+                    
+                    // Ensure prefix ends at a folder separator '/'
+                    if (commonPrefix.endsWith('/')) {
+                        // It's already a perfect folder path
+                    } else if (commonPrefix.includes('/')) {
+                        commonPrefix = commonPrefix.substring(0, commonPrefix.lastIndexOf('/') + 1);
+                    } else {
+                        // Check if all folders start with this prefix + '/'
+                        const allStartWith = nonRootFolders.every(f => f.startsWith(commonPrefix + '/'));
+                        if (allStartWith) {
+                             commonPrefix = commonPrefix + '/';
+                        } else {
+                            commonPrefix = ''; // Not a common folder path
+                        }
+                    }
+                } else if (nonRootFolders.length === 1 && nonRootFolders[0].includes('/')) {
+                     // If only one folder, check if it has a path and use its root
+                     commonPrefix = nonRootFolders[0].substring(0, nonRootFolders[0].indexOf('/') + 1);
+                }
+                // --- END NEW ---
+
                 // Iterate over sorted folders and create sections
                 sortedFolders.forEach(folder => {
                     const sectionContainer = document.createElement('div');
                     
                     const folderTitle = document.createElement('h2');
                     folderTitle.className = 'text-3xl font-bold text-white mb-6 border-b border-gray-700/80 pb-3 capitalize';
-                    // Clean up folder name for display
-                    folderTitle.textContent = folder === 'root' ? 'General Notes' : folder.replace(/[-_]/g, ' ');
+                    
+                    // --- UPDATED: Clean up folder name for display ---
+                    let displayFolderName = folder;
+                    if (folder === 'root') {
+                        displayFolderName = 'General Notes';
+                    } else if (commonPrefix && folder.startsWith(commonPrefix)) {
+                        // Remove the common prefix for a cleaner title
+                        displayFolderName = folder.substring(commonPrefix.length);
+                    }
+                    
+                    // Final cleanup for display
+                    folderTitle.textContent = displayFolderName.replace(/[-_]/g, ' ');
+                    // --- END UPDATED ---
+
                     sectionContainer.appendChild(folderTitle);
 
                     const folderGrid = document.createElement('div');
@@ -336,5 +397,7 @@
     </script>
 </body>
 </html>
+
+
 
 
