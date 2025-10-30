@@ -263,12 +263,41 @@
                     return acc;
                 }, {});
 
-                // Sort folder names, putting 'root' first
-                const sortedFolders = Object.keys(groupedFiles).sort((a, b) => {
+                // Custom natural sort function
+                function naturalSort(a, b) {
                     if (a === 'root') return -1;
                     if (b === 'root') return 1;
-                    return a.localeCompare(b);
-                });
+                    
+                    // Regex to find sequences of digits
+                    const re = /(\d+)/g;
+                    // Split strings into parts of text and numbers
+                    const partsA = a.split(re);
+                    const partsB = b.split(re);
+
+                    for (let i = 0; i < Math.min(partsA.length, partsB.length); i++) {
+                        const partA = partsA[i];
+                        const partB = partsB[i];
+
+                        // If the part is a number (it will be at an odd index after split)
+                        if (i % 2 === 1) {
+                            const numA = parseInt(partA, 10);
+                            const numB = parseInt(partB, 10);
+                            if (numA !== numB) {
+                                return numA - numB; // Compare numerically
+                            }
+                        } else {
+                            // Compare as strings
+                            if (partA !== partB) {
+                                return partA.localeCompare(partB);
+                            }
+                        }
+                    }
+                    // If one is a prefix of the other, shorter one comes first
+                    return partsA.length - partsB.length;
+                }
+
+                // Sort folder names using natural sort, putting 'root' first
+                const sortedFolders = Object.keys(groupedFiles).sort(naturalSort);
 
                 // Iterate over sorted folders and create sections
                 sortedFolders.forEach(folder => {
@@ -307,4 +336,5 @@
     </script>
 </body>
 </html>
+
 
