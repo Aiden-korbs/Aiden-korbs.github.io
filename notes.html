@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiden Korbs - Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+        }
+    </style>
+</head>
+<body class="text-gray-200 min-h-screen">
+
+    <!-- Header -->
+    <header class="border-b border-gray-700/50 sticky top-0 bg-gray-900/80 backdrop-blur-sm z-10">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold text-white hover:text-rose-400 transition-colors">Aiden Korbs</a>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-400 hover:text-white transition-colors font-medium">Projects</a>
+                <a href="notes.html" class="text-white font-medium">Notes</a>
+                <a href="about.html" class="text-gray-400 hover:text-white transition-colors font-medium">About</a>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-extrabold text-white mb-8">Notes Collections</h1>
+            <p class="text-gray-400 mb-12">A collection of notes, code snippets, and resources from various projects and university subjects. Select a collection to view all the notes within.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Card for EGH456 -->
+                <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGH456-HolyGrail" class="block bg-gray-800/50 p-6 rounded-lg border border-gray-700/80 hover:border-rose-500/80 transition-all duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-bold text-white">EGH456 - Holy Grail</h3>
+                    <p class="mt-2 text-gray-400 text-sm">Notes and resources for the EGH456 unit, focusing on key concepts and project work.</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="bg-blue-600/30 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Python</span>
+                        <span class="bg-blue-600/30 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full">University</span>
+                        <span class="bg-blue-600/30 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full">QUT</span>
+                    </div>
+                </a>
+
+                <!-- Placeholder for more collections -->
+                <div class="bg-gray-800/50 p-6 rounded-lg border border-dashed border-gray-700/80 flex items-center justify-center">
+                    <p class="text-gray-500">More note collections coming soon...</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-gray-700/50">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+            <p>&copy; 2025 Aiden Korbs. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

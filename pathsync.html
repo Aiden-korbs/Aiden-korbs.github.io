@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PathSync: See where you crossed paths</title>
+    <title>PathSync: Timeline Proximity Analyzer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,15 @@
     <!-- Header -->
     <header class="border-b border-gray-700/50 sticky top-0 bg-gray-900/80 backdrop-blur-sm z-10">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-gray-400 hover:text-white transition-colors font-medium">&larr; Back to Projects</a>
-            <a href="https://github.com/Aiden-korbs/PathSync" target="_blank" class="text-gray-400 hover:text-white transition-colors font-medium">View Python Version</a>
+             <a href="index.html" class="text-xl font-bold text-white hover:text-rose-400 transition-colors">Aiden Korbs</a>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-400 hover:text-white transition-colors font-medium">Projects</a>
+                <a href="notes.html" class="text-gray-400 hover:text-white transition-colors font-medium">Notes</a>
+                <a href="about.html" class="text-gray-400 hover:text-white transition-colors font-medium">About</a>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
         </nav>
     </header>
 
@@ -44,7 +51,7 @@
             <div class="lg:col-span-2 space-y-8">
                 <div class="text-center">
                     <h1 class="text-4xl font-extrabold text-white">PathSync</h1>
-                    <p class="text-gray-400 mt-2">Analyse Google Timeline files to see paths crossed.</p>
+                    <p class="text-gray-400 mt-2">Analyze Google Timeline files to find proximity events.</p>
                 </div>
 
                 <!-- Settings Panel -->
@@ -87,7 +94,7 @@
 
                 <!-- Results Panel -->
                 <div id="results-container" class="space-y-6 pt-8 border-t border-gray-700/50 hidden">
-                    <h2 class="text-3xl font-bold text-center text-white">Results</h2>
+                    <h2 class="text-3xl font-bold text-center text-white">Analysis Results</h2>
                     <div id="status" class="text-center text-gray-400 p-4 bg-gray-800/50 rounded-lg border border-gray-700/80"></div>
                     <p id="summary" class="text-center font-medium text-lg"></p>
                     <div id="closest-match-card" class="bg-gray-800/50 border border-gray-700/80 rounded-xl p-6 space-y-4 hidden">
@@ -112,7 +119,7 @@
                                 <h4 class="font-semibold text-gray-200">Method 1: Google Takeout (Desktop)</h4>
                                 <ol class="list-decimal list-inside mt-2 space-y-1">
                                     <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-rose-500 hover:underline">Google Takeout</a> website.</li>
-                                    <li>Click "Deselect all", then scroll and select "Timeline".</li>
+                                    <li>Click "Deselect all", then scroll and select "Location History".</li>
                                     <li>Ensure the format is JSON, then "Create export".</li>
                                 </ol>
                             </div>
@@ -131,6 +138,13 @@
 
         </div>
     </main>
+    
+    <!-- Footer -->
+    <footer class="mt-12 border-t border-gray-700/50">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+            <p>&copy; 2025 Aiden Korbs. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
         const fileUploadContainer = document.getElementById('file-inputs');
@@ -370,4 +384,3 @@
     </script>
 </body>
 </html>
-
