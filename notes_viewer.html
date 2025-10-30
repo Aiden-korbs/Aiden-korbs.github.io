@@ -6,6 +6,14 @@
     <title>Aiden Korbs - Notes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    
+    <!-- NEW: Add KaTeX for Math Equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" xintegrity="sha384-KiWOvVjnN8qwKMvhQnlEMWdcGpbMlWbTAESmlOKNLIbBIjTr9iA/B5S8j/ALU5B1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" xintegrity="sha384-hIoBPJpTUs74ddyc4bB2EaTsf/e/fMoNlnbAViBwA98xKGFEEe/zSBNsXDGMiT2C" crossorigin="anonymous"></script>
+    
+    <!-- NEW: Add Showdown-KaTeX Extension -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown-katex/0.8.0/showdown-katex.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,32 +31,56 @@
         }
         
         /* --- Enhanced Markdown Styling --- */
-        #note-viewer-content h1, 
-        #note-viewer-content h2, 
+        #note-viewer-content h1 {
+            color: white;
+            font-weight: 800; /* extrabold */
+            border-bottom: 1px solid #374151;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        #note-viewer-content h2 {
+            color: white;
+            font-weight: 700; /* bold */
+            border-bottom: 1px solid #374151; 
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
         #note-viewer-content h3 {
             color: white;
-            border-bottom: 1px solid #374151; /* border-gray-700 */
-            padding-bottom: 0.5rem;
+            font-weight: 600; /* semibold */
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
         #note-viewer-content p { 
             margin-bottom: 1rem; 
             color: #d1d5db; /* text-gray-300 */
-            line-height: 1.6;
+            line-height: 1.7; /* Increased line height */
         }
-        #note-viewer-content a { 
+        /* Regular links */
+        #note-viewer-content a:not(.obsidian-link) { 
             color: #f43f5e; /* text-rose-500 */
             text-decoration: underline;
+            transition: color 0.2s;
         }
+        #note-viewer-content a:not(.obsidian-link):hover { 
+            color: #fb7185; /* text-rose-400 */
+        }
+        
+        /* Inline code */
         #note-viewer-content code { 
-            background-color: #1f2937; /* bg-gray-800 */
-            padding: 0.2rem 0.4rem; 
-            border-radius: 0.25rem; 
+            background-color: #374151; /* bg-gray-700 */
+            color: #fca5a5; /* text-red-300 */
+            padding: 0.25rem 0.5rem; 
+            border-radius: 6px; 
             font-size: 0.9em;
+            font-family: monospace;
         }
+        /* Code blocks */
         #note-viewer-content pre { 
             background-color: #1f2937; /* bg-gray-800 */
+            border: 1px solid #374151; /* border-gray-700 */
             padding: 1rem; 
             border-radius: 0.5rem; 
             overflow-x: auto; 
@@ -57,29 +89,36 @@
         #note-viewer-content pre code {
              padding: 0;
              background-color: transparent;
+             color: inherit; /* Inherit color from pre */
+             font-size: 1em; /* Reset font size */
         }
-        #note-viewer-content ul { 
-            list-style-type: disc; 
-            padding-left: 2rem; 
-            margin-bottom: 1rem; 
-            color: #d1d5db;
-        }
+        #note-viewer-content ul,
         #note-viewer-content ol { 
-            list-style-type: decimal; 
             padding-left: 2rem; 
             margin-bottom: 1rem; 
             color: #d1d5db;
         }
+         #note-viewer-content ul { list-style-type: disc; }
+         #note-viewer-content ol { list-style-type: decimal; }
+         
         #note-viewer-content li { 
             margin-bottom: 0.5rem; 
+            line-height: 1.6;
         }
+        /* Blockquotes */
         #note-viewer-content blockquote { 
-            border-left: 4px solid #4b5563; /* border-gray-600 */
-            padding-left: 1rem; 
+            border-left: 4px solid #2563eb; /* border-blue-600 */
+            background-color: #1f2937; /* bg-gray-800 */
+            padding: 1rem 1.5rem; 
             margin: 1.5rem 0; 
             color: #9ca3af; /* text-gray-400 */
             font-style: italic;
         }
+        #note-viewer-content blockquote p {
+            margin-bottom: 0; /* No extra margin for paragraphs in blockquotes */
+        }
+        
+        /* Tables */
         #note-viewer-content table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -87,31 +126,39 @@
             border: 1px solid #374151; /* border-gray-700 */
         }
         #note-viewer-content th { 
-            background-color: #1f2937; /* bg-gray-800 */
-            padding: 0.75rem; 
-            border: 1px solid #374151; /* border-gray-700 */
+            background-color: #374151; /* bg-gray-700 */
+            padding: 0.75rem 1rem; 
+            border: 1px solid #4b5563; /* border-gray-600 */
             text-align: left;
-            font-weight: 600;
+            font-weight: 700; /* bold */
+            color: white;
         }
         #note-viewer-content td { 
-            padding: 0.75rem; 
+            padding: 0.75rem 1rem; 
             border: 1px solid #374151; /* border-gray-700 */
         }
         #note-viewer-content tr:nth-child(even) { 
             background-color: #1f2937; /* bg-gray-800 */
         }
         
-        /* --- NEW: Style for Obsidian Links --- */
+        /* Obsidian-style links */
         #note-viewer-content a.obsidian-link {
             color: #60a5fa; /* text-blue-400 */
             text-decoration: none;
             border-bottom: 1px dashed #60a5fa;
             opacity: 0.8;
+            transition: all 0.2s;
         }
         #note-viewer-content a.obsidian-link:hover {
-            color: #3b82f6; /* text-blue-500 */
+            color: #93c5fd; /* text-blue-300 */
             border-bottom-style: solid;
             opacity: 1;
+        }
+
+        /* NEW: KaTeX dark theme override */
+        .katex {
+            color: #d1d5db; /* text-gray-300 */
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -176,46 +223,41 @@
         const closeViewerBtn = document.getElementById('close-viewer-btn');
         const repoLink = document.getElementById('repo-link');
         
-        // --- NEW: Global vars for link handling ---
-        let allMdFiles = []; // To store all found .md paths
-        let currentOwner = ''; // To store current owner
-        let currentRepo = ''; // To store current repo
+        let allMdFiles = [];
+        let currentOwner = '';
+        let currentRepo = '';
         
+        // NEW: Register KaTeX and Obsidian links extensions
         const showdownConverter = new showdown.Converter({
             tables: true,
             tasklists: true,
             simplifiedAutoLink: true,
             strikethrough: true,
-            ghCompatibleHeaderId: true
+            ghCompatibleHeaderId: true,
+            extensions: ['katex', 'obsidianlinks'] // <-- Register 'katex'
         });
         
-        // --- NEW: Showdown extension for [[Obsidian-style]] links ---
         showdown.extension('obsidianlinks', () => {
             return [{
-                type: 'lang', // language extension
-                regex: /\[\[([^\]]+)\]\]/g, // Find [[Note Name]]
+                type: 'lang',
+                regex: /\[\[([^\]]+)\]\]/g,
                 replace: (match, noteName) => {
-                    // Create a link that we can intercept later
-                    // We use data-note-name to store the target for our click handler
                     return `<a href="#" class="obsidian-link" data-note-name="${noteName}">${noteName}</a>`;
                 }
             }];
         });
-        // Register the extension
-        showdownConverter.addExtension('obsidianlinks');
-        // --- END NEW ---
+        // Note: The katex extension is loaded from the separate script, we just need to register it.
+        // showdownConverter.addExtension('obsidianlinks'); // This line was redundant, removed.
 
         const urlParams = new URLSearchParams(window.location.search);
         const owner = urlParams.get('owner');
         const repo = urlParams.get('repo');
-        // --- NEW: Store owner/repo globally ---
         currentOwner = owner;
         currentRepo = repo;
         
         document.getElementById('repo-title').textContent = repo ? `Notes: ${repo}` : 'Notes Viewer';
         document.getElementById('repo-description').textContent = repo ? `Browsing all Markdown notes found in the '${repo}' repository.` : 'Specify a repository in the URL to view its notes.';
 
-        // Fetches the tree of a repo to find all .md files, ignoring READMEs
         async function getMdFilesFromRepo(owner, repo) {
             try {
                 const branchResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
@@ -238,7 +280,6 @@
             }
         }
 
-        // Creates a card for a specific .md file
         function createNoteCard(filePath, owner, repo) {
             const card = document.createElement('div');
             card.className = 'block cursor-pointer bg-gray-800/50 p-6 rounded-lg border border-gray-700/80 hover:border-rose-500/80 transition-all duration-300 transform hover:-translate-y-1';
@@ -250,7 +291,6 @@
             return card;
         }
 
-        // Fetches and displays the content of a specific file
         async function fetchAndShowFile(owner, repo, title, filePath) {
             noteViewerTitle.textContent = title;
             noteViewerContent.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div></div>';
@@ -265,15 +305,13 @@
                 
                 // Decode Base64 (atob) to a byte string
                 const binaryString = atob(data.content);
-                // Get the length of the byte string
                 const len = binaryString.length;
-                // Create a an array of 8-bit unsigned integers
                 const bytes = new Uint8Array(len);
-                // Populate the array with the character codes of the byte string
                 for (let i = 0; i < len; i++) {
                     bytes[i] = binaryString.charCodeAt(i);
                 }
-                // Decode the UTF-8 bytes into a proper string
+                
+                // NEW: Use TextDecoder for proper UTF-8 handling
                 const textDecoder = new TextDecoder('utf-8');
                 const markdownContent = textDecoder.decode(bytes);
                 
@@ -284,14 +322,12 @@
             }
         }
         
-        // --- NEW: Function to find and open a linked note ---
         function findAndOpenNote(noteName) {
             const normalize = (str) => str.toLowerCase().replace(/[-_ ]/g, '');
             const targetNormalized = normalize(noteName);
 
             let foundPath = null;
             
-            // Search for a file that matches the note name
             for (const filePath of allMdFiles) {
                 const fileName = filePath.split('/').pop().replace('.md', '');
                 const fileNormalized = normalize(fileName);
@@ -303,16 +339,39 @@
             }
 
             if (foundPath) {
-                // Found it. Open it in the viewer.
                 fetchAndShowFile(currentOwner, currentRepo, noteName, foundPath);
             } else {
-                // Could not find note.
                 alert(`Note not found: "${noteName}"`);
             }
         }
-        // --- END NEW ---
         
-        // Main function to populate the entire page
+        // Natural sort function for folder names
+        function naturalSort(a, b) {
+            if (a === 'root') return -1;
+            if (b === 'root') return 1;
+            const re = /(\d+)/g;
+            const partsA = a.split(re);
+            const partsB = b.split(re);
+
+            for (let i = 0; i < Math.min(partsA.length, partsB.length); i++) {
+                const partA = partsA[i];
+                const partB = partsB[i];
+                if (i % 2 === 1) { // It's a number
+                    const numA = parseInt(partA, 10);
+                    const numB = parseInt(partB, 10);
+                    if (numA !== numB) {
+                        return numA - numB;
+                    }
+                } else { // It's a string
+                    if (partA !== partB) {
+                        return partA.localeCompare(partB);
+                    }
+                }
+            }
+            return partsA.length - partsB.length;
+        }
+
+
         async function populateNotesPage() {
             if (!owner || !repo) {
                 notesGrid.innerHTML = '<p class="text-red-400 text-center">Error: Repository owner and name not specified in the URL. Example: ?owner=yourname&repo=yourrepo</p>';
@@ -323,17 +382,16 @@
             notesGrid.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div><p class="ml-4">Scanning repository...</p></div>';
             
             const mdFiles = await getMdFilesFromRepo(owner, repo);
-            allMdFiles = mdFiles; // --- NEW: Store file list globally
+            allMdFiles = mdFiles;
             
             if (mdFiles.length > 0) {
-                notesGrid.innerHTML = ''; // Clear loading spinner
+                notesGrid.innerHTML = '';
                 
-                // Group files by folder
                 const groupedFiles = mdFiles.reduce((acc, filePath) => {
                     const parts = filePath.split('/');
-                    let folder = 'root'; // Default for files in the root
+                    let folder = 'root';
                     if (parts.length > 1) {
-                        folder = parts.slice(0, -1).join('/'); // Get the full path as folder name
+                        folder = parts.slice(0, -1).join('/');
                     }
                     if (!acc[folder]) {
                         acc[folder] = [];
@@ -342,100 +400,50 @@
                     return acc;
                 }, {});
 
-                // Custom natural sort function
-                function naturalSort(a, b) {
-                    if (a === 'root') return -1;
-                    if (b === 'root') return 1;
-                    
-                    // Regex to find sequences of digits
-                    const re = /(\d+)/g;
-                    // Split strings into parts of text and numbers
-                    const partsA = a.split(re);
-                    const partsB = b.split(re);
-
-                    for (let i = 0; i < Math.min(partsA.length, partsB.length); i++) {
-                        const partA = partsA[i];
-                        const partB = partsB[i];
-
-                        // If the part is a number (it will be at an odd index after split)
-                        if (i % 2 === 1) {
-                            const numA = parseInt(partA, 10);
-                            const numB = parseInt(partB, 10);
-                            if (numA !== numB) {
-                                return numA - numB; // Compare numerically
-                            }
-                        } else {
-                            // Compare as strings
-                            if (partA !== partB) {
-                                return partA.localeCompare(partB);
-                            }
-                        }
-                    }
-                    // If one is a prefix of the other, shorter one comes first
-                    return partsA.length - partsB.length;
-                }
-
-                // Sort folder names using natural sort, putting 'root' first
                 const sortedFolders = Object.keys(groupedFiles).sort(naturalSort);
 
-                // --- Find and remove common root folder path ---
                 let commonPrefix = '';
                 const nonRootFolders = sortedFolders.filter(f => f !== 'root');
 
                 if (nonRootFolders.length > 0) {
-                    // Split all paths into components
                     const paths = nonRootFolders.map(f => f.split('/'));
-                    
-                    // Find the shortest path length
                     const minLength = Math.min(...paths.map(p => p.length));
-                    
-                    // Find common prefix components
                     let prefixComponents = [];
                     for (let i = 0; i < minLength; i++) {
-                        const component = paths[0][i]; // Get component from first path
-                        // Check if this component is the same in all other paths
+                        const component = paths[0][i];
                         if (paths.every(p => p[i] === component)) {
                             prefixComponents.push(component);
                         } else {
-                            break; // Stop at the first difference
+                            break;
                         }
                     }
 
                     if (prefixComponents.length > 0) {
                         const tempPrefix = prefixComponents.join('/') + '/';
-                        // Check if *all* non-root folders start with this path (or are this path)
                         if (nonRootFolders.every(f => f.startsWith(tempPrefix) || f === prefixComponents.join('/'))) {
                              commonPrefix = tempPrefix;
                         }
                     }
                 }
-                // --- END ---
 
-                // Iterate over sorted folders and create sections
                 sortedFolders.forEach(folder => {
                     const sectionContainer = document.createElement('div');
                     
                     const folderTitle = document.createElement('h2');
                     folderTitle.className = 'text-3xl font-bold text-white mb-6 border-b border-gray-700/80 pb-3 capitalize';
                     
-                    // --- UPDATED: Clean up folder name for display ---
                     let displayFolderName = folder;
                     if (folder === 'root') {
                         displayFolderName = 'General Notes';
                     } else if (commonPrefix && folder.startsWith(commonPrefix)) {
-                        // Remove the common prefix for a cleaner title
                         displayFolderName = folder.substring(commonPrefix.length);
                         
-                        // If substring is empty, it was the root folder itself (e.g., "EGH418")
-                        // In that case, we show the root folder name without the trailing slash
                         if (displayFolderName === '') {
-                            displayFolderName = folder; 
+                            displayFolderName = folder.split('/').pop(); // Use last part if it's the root itself
                         }
                     }
                     
-                    // Final cleanup for display
                     folderTitle.textContent = displayFolderName.replace(/[-_]/g, ' ');
-                    // --- END UPDATED ---
 
                     sectionContainer.appendChild(folderTitle);
 
@@ -463,7 +471,6 @@
             if (e.target === noteViewer) noteViewer.classList.add('hidden');
         });
         
-        // --- NEW: Event delegation for Obsidian links ---
         noteViewerContent.addEventListener('click', (e) => {
             const link = e.target.closest('a.obsidian-link');
             if (link) {
