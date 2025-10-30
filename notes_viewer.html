@@ -100,6 +100,19 @@
         #note-viewer-content tr:nth-child(even) { 
             background-color: #1f2937; /* bg-gray-800 */
         }
+        
+        /* --- NEW: Style for Obsidian Links --- */
+        #note-viewer-content a.obsidian-link {
+            color: #60a5fa; /* text-blue-400 */
+            text-decoration: none;
+            border-bottom: 1px dashed #60a5fa;
+            opacity: 0.8;
+        }
+        #note-viewer-content a.obsidian-link:hover {
+            color: #3b82f6; /* text-blue-500 */
+            border-bottom-style: solid;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="text-gray-200 min-h-screen">
@@ -163,6 +176,11 @@
         const closeViewerBtn = document.getElementById('close-viewer-btn');
         const repoLink = document.getElementById('repo-link');
         
+        // --- NEW: Global vars for link handling ---
+        let allMdFiles = []; // To store all found .md paths
+        let currentOwner = ''; // To store current owner
+        let currentRepo = ''; // To store current repo
+        
         const showdownConverter = new showdown.Converter({
             tables: true,
             tasklists: true,
@@ -170,10 +188,29 @@
             strikethrough: true,
             ghCompatibleHeaderId: true
         });
+        
+        // --- NEW: Showdown extension for [[Obsidian-style]] links ---
+        showdown.extension('obsidianlinks', () => {
+            return [{
+                type: 'lang', // language extension
+                regex: /\[\[([^\]]+)\]\]/g, // Find [[Note Name]]
+                replace: (match, noteName) => {
+                    // Create a link that we can intercept later
+                    // We use data-note-name to store the target for our click handler
+                    return `<a href="#" class="obsidian-link" data-note-name="${noteName}">${noteName}</a>`;
+                }
+            }];
+        });
+        // Register the extension
+        showdownConverter.addExtension('obsidianlinks');
+        // --- END NEW ---
 
         const urlParams = new URLSearchParams(window.location.search);
         const owner = urlParams.get('owner');
         const repo = urlParams.get('repo');
+        // --- NEW: Store owner/repo globally ---
+        currentOwner = owner;
+        currentRepo = repo;
         
         document.getElementById('repo-title').textContent = repo ? `Notes: ${repo}` : 'Notes Viewer';
         document.getElementById('repo-description').textContent = repo ? `Browsing all Markdown notes found in the '${repo}' repository.` : 'Specify a repository in the URL to view its notes.';
@@ -247,6 +284,34 @@
             }
         }
         
+        // --- NEW: Function to find and open a linked note ---
+        function findAndOpenNote(noteName) {
+            const normalize = (str) => str.toLowerCase().replace(/[-_ ]/g, '');
+            const targetNormalized = normalize(noteName);
+
+            let foundPath = null;
+            
+            // Search for a file that matches the note name
+            for (const filePath of allMdFiles) {
+                const fileName = filePath.split('/').pop().replace('.md', '');
+                const fileNormalized = normalize(fileName);
+                
+                if (fileNormalized === targetNormalized) {
+                    foundPath = filePath;
+                    break;
+                }
+            }
+
+            if (foundPath) {
+                // Found it. Open it in the viewer.
+                fetchAndShowFile(currentOwner, currentRepo, noteName, foundPath);
+            } else {
+                // Could not find note.
+                alert(`Note not found: "${noteName}"`);
+            }
+        }
+        // --- END NEW ---
+        
         // Main function to populate the entire page
         async function populateNotesPage() {
             if (!owner || !repo) {
@@ -258,6 +323,7 @@
             notesGrid.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div><p class="ml-4">Scanning repository...</p></div>';
             
             const mdFiles = await getMdFilesFromRepo(owner, repo);
+            allMdFiles = mdFiles; // --- NEW: Store file list globally
             
             if (mdFiles.length > 0) {
                 notesGrid.innerHTML = ''; // Clear loading spinner
@@ -396,12 +462,18 @@
         noteViewer.addEventListener('click', (e) => {
             if (e.target === noteViewer) noteViewer.classList.add('hidden');
         });
+        
+        // --- NEW: Event delegation for Obsidian links ---
+        noteViewerContent.addEventListener('click', (e) => {
+            const link = e.target.closest('a.obsidian-link');
+            if (link) {
+                e.preventDefault();
+                const targetNoteName = link.getAttribute('data-note-name');
+                findAndOpenNote(targetNoteName);
+            }
+        });
 
     </script>
 </body>
 </html>
-
-
-
-
 
