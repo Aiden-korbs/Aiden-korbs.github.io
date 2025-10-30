@@ -14,24 +14,91 @@
             font-family: 'Inter', sans-serif;
             background-color: #111827; /* bg-gray-900 */
         }
-        #note-viewer-content h1, #note-viewer-content h2, #note-viewer-content h3 {
-            color: white;
-            border-bottom: 1px solid #374151;
-            padding-bottom: 0.5rem;
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        #note-viewer-content p { margin-bottom: 1rem; color: #d1d5db; }
-        #note-viewer-content a { color: #f43f5e; text-decoration: underline; }
-        #note-viewer-content code { background-color: #1f2937; padding: 0.2rem 0.4rem; border-radius: 0.25rem; }
-        #note-viewer-content pre { background-color: #1f2937; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; }
-        #note-viewer-content ul { list-style-type: disc; padding-left: 2rem; margin-bottom: 1rem; color: #d1d5db; }
         .spinner {
             border-top-color: #f43f5e;
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+        
+        /* --- Enhanced Markdown Styling --- */
+        #note-viewer-content h1, 
+        #note-viewer-content h2, 
+        #note-viewer-content h3 {
+            color: white;
+            border-bottom: 1px solid #374151; /* border-gray-700 */
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        #note-viewer-content p { 
+            margin-bottom: 1rem; 
+            color: #d1d5db; /* text-gray-300 */
+            line-height: 1.6;
+        }
+        #note-viewer-content a { 
+            color: #f43f5e; /* text-rose-500 */
+            text-decoration: underline;
+        }
+        #note-viewer-content code { 
+            background-color: #1f2937; /* bg-gray-800 */
+            padding: 0.2rem 0.4rem; 
+            border-radius: 0.25rem; 
+            font-size: 0.9em;
+        }
+        #note-viewer-content pre { 
+            background-color: #1f2937; /* bg-gray-800 */
+            padding: 1rem; 
+            border-radius: 0.5rem; 
+            overflow-x: auto; 
+            margin-bottom: 1rem;
+        }
+        #note-viewer-content pre code {
+             padding: 0;
+             background-color: transparent;
+        }
+        #note-viewer-content ul { 
+            list-style-type: disc; 
+            padding-left: 2rem; 
+            margin-bottom: 1rem; 
+            color: #d1d5db;
+        }
+        #note-viewer-content ol { 
+            list-style-type: decimal; 
+            padding-left: 2rem; 
+            margin-bottom: 1rem; 
+            color: #d1d5db;
+        }
+        #note-viewer-content li { 
+            margin-bottom: 0.5rem; 
+        }
+        #note-viewer-content blockquote { 
+            border-left: 4px solid #4b5563; /* border-gray-600 */
+            padding-left: 1rem; 
+            margin: 1.5rem 0; 
+            color: #9ca3af; /* text-gray-400 */
+            font-style: italic;
+        }
+        #note-viewer-content table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-bottom: 1.5rem;
+            border: 1px solid #374151; /* border-gray-700 */
+        }
+        #note-viewer-content th { 
+            background-color: #1f2937; /* bg-gray-800 */
+            padding: 0.75rem; 
+            border: 1px solid #374151; /* border-gray-700 */
+            text-align: left;
+            font-weight: 600;
+        }
+        #note-viewer-content td { 
+            padding: 0.75rem; 
+            border: 1px solid #374151; /* border-gray-700 */
+        }
+        #note-viewer-content tr:nth-child(even) { 
+            background-color: #1f2937; /* bg-gray-800 */
         }
     </style>
 </head>
@@ -57,8 +124,9 @@
         <div class="max-w-4xl mx-auto">
             <h1 id="repo-title" class="text-4xl font-extrabold text-white mb-8"></h1>
             <p id="repo-description" class="text-gray-400 mb-12"></p>
-            <div id="notes-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Note cards will be dynamically inserted here -->
+            <!-- Notes grid is now a container for folder sections -->
+            <div id="notes-grid" class="space-y-12">
+                <!-- Folder sections will be dynamically inserted here -->
             </div>
         </div>
     </main>
@@ -71,7 +139,7 @@
                 <button id="close-viewer-btn" class="text-gray-400 hover:text-white">&times;</button>
             </div>
             <div class="p-6 overflow-y-auto">
-                <div id="note-viewer-content" class="prose prose-invert"></div>
+                <div id="note-viewer-content"></div>
             </div>
              <div class="p-4 border-t border-gray-700/80 text-right">
                 <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-rose-500 hover:text-rose-400 transition-colors">View on GitHub &rarr;</a>
@@ -94,9 +162,15 @@
         const noteViewerContent = document.getElementById('note-viewer-content');
         const closeViewerBtn = document.getElementById('close-viewer-btn');
         const repoLink = document.getElementById('repo-link');
-        const showdownConverter = new showdown.Converter();
+        
+        const showdownConverter = new showdown.Converter({
+            tables: true,
+            tasklists: true,
+            simplifiedAutoLink: true,
+            strikethrough: true,
+            ghCompatibleHeaderId: true
+        });
 
-        // Get repo details from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const owner = urlParams.get('owner');
         const repo = urlParams.get('repo');
@@ -104,7 +178,7 @@
         document.getElementById('repo-title').textContent = repo ? `Notes: ${repo}` : 'Notes Viewer';
         document.getElementById('repo-description').textContent = repo ? `Browsing all Markdown notes found in the '${repo}' repository.` : 'Specify a repository in the URL to view its notes.';
 
-        // Fetches the tree of a repo to find all .md files
+        // Fetches the tree of a repo to find all .md files, ignoring READMEs
         async function getMdFilesFromRepo(owner, repo) {
             try {
                 const branchResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
@@ -117,7 +191,9 @@
                 const treeData = await treeResponse.json();
                 
                 return treeData.tree
-                    .filter(file => file.path.endsWith('.md') && file.type === 'blob')
+                    .filter(file => file.path.endsWith('.md') && 
+                                   !file.path.toLowerCase().endsWith('readme.md') && 
+                                   file.type === 'blob')
                     .map(file => file.path);
             } catch (error) {
                 console.error(`Failed to get files for ${owner}/${repo}:`, error);
@@ -161,23 +237,63 @@
         // Main function to populate the entire page
         async function populateNotesPage() {
             if (!owner || !repo) {
-                notesGrid.innerHTML = '<p class="text-red-400 text-center md:col-span-2">Error: Repository owner and name not specified in the URL. Example: ?owner=yourname&repo=yourrepo</p>';
+                notesGrid.innerHTML = '<p class="text-red-400 text-center">Error: Repository owner and name not specified in the URL. Example: ?owner=yourname&repo=yourrepo</p>';
                 document.getElementById('repo-description').textContent = 'Please provide repository details in the URL.';
                 return;
             }
 
-            notesGrid.innerHTML = '<div class="flex justify-center items-center h-48 md:col-span-2"><div class="spinner w-8 h-8 border-4 rounded-full"></div><p class="ml-4">Scanning repository...</p></div>';
+            notesGrid.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div><p class="ml-4">Scanning repository...</p></div>';
             
             const mdFiles = await getMdFilesFromRepo(owner, repo);
             
             if (mdFiles.length > 0) {
                 notesGrid.innerHTML = ''; // Clear loading spinner
-                mdFiles.forEach(filePath => {
-                    const card = createNoteCard(filePath, owner, repo);
-                    notesGrid.appendChild(card);
+                
+                // Group files by folder
+                const groupedFiles = mdFiles.reduce((acc, filePath) => {
+                    const parts = filePath.split('/');
+                    let folder = 'root'; // Default for files in the root
+                    if (parts.length > 1) {
+                        folder = parts.slice(0, -1).join('/'); // Get the full path as folder name
+                    }
+                    if (!acc[folder]) {
+                        acc[folder] = [];
+                    }
+                    acc[folder].push(filePath);
+                    return acc;
+                }, {});
+
+                // Sort folder names, putting 'root' first
+                const sortedFolders = Object.keys(groupedFiles).sort((a, b) => {
+                    if (a === 'root') return -1;
+                    if (b === 'root') return 1;
+                    return a.localeCompare(b);
                 });
+
+                // Iterate over sorted folders and create sections
+                sortedFolders.forEach(folder => {
+                    const sectionContainer = document.createElement('div');
+                    
+                    const folderTitle = document.createElement('h2');
+                    folderTitle.className = 'text-3xl font-bold text-white mb-6 border-b border-gray-700/80 pb-3 capitalize';
+                    // Clean up folder name for display
+                    folderTitle.textContent = folder === 'root' ? 'General Notes' : folder.replace(/[-_]/g, ' ');
+                    sectionContainer.appendChild(folderTitle);
+
+                    const folderGrid = document.createElement('div');
+                    folderGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+                    
+                    groupedFiles[folder].forEach(filePath => {
+                        const card = createNoteCard(filePath, owner, repo);
+                        folderGrid.appendChild(card);
+                    });
+
+                    sectionContainer.appendChild(folderGrid);
+                    notesGrid.appendChild(sectionContainer);
+                });
+
             } else {
-                notesGrid.innerHTML = '<p class="text-gray-500 md:col-span-2 text-center">No Markdown files found in this repository.</p>';
+                notesGrid.innerHTML = '<p class="text-gray-500 text-center">No Markdown files (excluding READMEs) found in this repository.</p>';
             }
         }
 
@@ -191,3 +307,4 @@
     </script>
 </body>
 </html>
+
