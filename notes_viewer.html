@@ -312,41 +312,38 @@
                 // Sort folder names using natural sort, putting 'root' first
                 const sortedFolders = Object.keys(groupedFiles).sort(naturalSort);
 
-                // --- NEW: Find and remove common root folder path ---
+                // --- Find and remove common root folder path ---
                 let commonPrefix = '';
                 const nonRootFolders = sortedFolders.filter(f => f !== 'root');
-                if (nonRootFolders.length > 1) {
-                    // Find the common prefix among all non-root folders
-                    const firstFolder = nonRootFolders[0];
-                    let i = 0;
-                    while (i < firstFolder.length) {
-                        const char = firstFolder[i];
-                        if (!nonRootFolders.every(f => f[i] === char)) {
-                            break;
-                        }
-                        i++;
-                    }
-                    commonPrefix = firstFolder.substring(0, i);
+
+                if (nonRootFolders.length > 0) {
+                    // Split all paths into components
+                    const paths = nonRootFolders.map(f => f.split('/'));
                     
-                    // Ensure prefix ends at a folder separator '/'
-                    if (commonPrefix.endsWith('/')) {
-                        // It's already a perfect folder path
-                    } else if (commonPrefix.includes('/')) {
-                        commonPrefix = commonPrefix.substring(0, commonPrefix.lastIndexOf('/') + 1);
-                    } else {
-                        // Check if all folders start with this prefix + '/'
-                        const allStartWith = nonRootFolders.every(f => f.startsWith(commonPrefix + '/'));
-                        if (allStartWith) {
-                             commonPrefix = commonPrefix + '/';
+                    // Find the shortest path length
+                    const minLength = Math.min(...paths.map(p => p.length));
+                    
+                    // Find common prefix components
+                    let prefixComponents = [];
+                    for (let i = 0; i < minLength; i++) {
+                        const component = paths[0][i]; // Get component from first path
+                        // Check if this component is the same in all other paths
+                        if (paths.every(p => p[i] === component)) {
+                            prefixComponents.push(component);
                         } else {
-                            commonPrefix = ''; // Not a common folder path
+                            break; // Stop at the first difference
                         }
                     }
-                } else if (nonRootFolders.length === 1 && nonRootFolders[0].includes('/')) {
-                     // If only one folder, check if it has a path and use its root
-                     commonPrefix = nonRootFolders[0].substring(0, nonRootFolders[0].indexOf('/') + 1);
+
+                    if (prefixComponents.length > 0) {
+                        const tempPrefix = prefixComponents.join('/') + '/';
+                        // Check if *all* non-root folders start with this path (or are this path)
+                        if (nonRootFolders.every(f => f.startsWith(tempPrefix) || f === prefixComponents.join('/'))) {
+                             commonPrefix = tempPrefix;
+                        }
+                    }
                 }
-                // --- END NEW ---
+                // --- END ---
 
                 // Iterate over sorted folders and create sections
                 sortedFolders.forEach(folder => {
@@ -362,6 +359,12 @@
                     } else if (commonPrefix && folder.startsWith(commonPrefix)) {
                         // Remove the common prefix for a cleaner title
                         displayFolderName = folder.substring(commonPrefix.length);
+                        
+                        // If substring is empty, it was the root folder itself (e.g., "EGH418")
+                        // In that case, we show the root folder name without the trailing slash
+                        if (displayFolderName === '') {
+                            displayFolderName = folder; 
+                        }
                     }
                     
                     // Final cleanup for display
@@ -397,6 +400,7 @@
     </script>
 </body>
 </html>
+
 
 
 
