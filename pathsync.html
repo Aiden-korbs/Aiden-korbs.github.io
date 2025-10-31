@@ -12,139 +12,160 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
         }
         .spinner {
-            border-top-color: #f43f5e; /* rose-500 */
+            border-top-color: #4f46e5; /* indigo-600 */
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        /* Style for date input placeholder */
+        /* Style for date input */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.8);
+            cursor: pointer;
+        }
+
+        /* --- Page Load Animation --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .content-fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        /* --- Sidebar Link Hover --- */
+        aside nav a {
+            transition: all 0.2s ease-in-out;
+        }
+        aside nav a:hover {
+            transform: translateX(4px);
+            color: #312e81; /* indigo-900 */
+        }
+
+        /* --- Card Hover Animation --- */
+        .animated-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .animated-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
         }
     </style>
 </head>
-<body class="text-gray-200 min-h-screen">
+<body class="flex min-h-screen bg-gray-100 text-slate-700">
 
-    <!-- Header -->
-    <header class="border-b border-gray-700/50 sticky top-0 bg-gray-900/80 backdrop-blur-sm z-10">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-             <a href="index.html" class="text-xl font-bold text-white hover:text-rose-400 transition-colors">Aiden Korbs</a>
-            <div class="flex items-center space-x-6">
-                <a href="index.html" class="text-gray-400 hover:text-white transition-colors font-medium">Projects</a>
-                <a href="notes.html" class="text-gray-400 hover:text-white transition-colors font-medium">Notes</a>
-                <a href="about.html" class="text-gray-400 hover:text-white transition-colors font-medium">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-                </a>
-            </div>
+    <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col p-6 sticky top-0 h-screen">
+        <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-indigo-600 transition-colors mb-8">Aiden</a>
+        <nav class="flex flex-col space-y-3">
+            <a href="index.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">Projects</a>
+            <a href="notes.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">Notes</a>
+            <a href="about.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">About</a>
         </nav>
-    </header>
+        <div class="mt-auto"> <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-slate-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+            </a>
+        </div>
+    </aside>
 
-    <main class="container mx-auto px-6 py-12">
-        <div class="lg:grid lg:grid-cols-3 lg:gap-12">
+    <div class="flex-grow overflow-y-auto h-screen">
+        <main class="max-w-7xl mx-auto px-10 py-12 content-fade-in">
             
-            <!-- Left Column: Main App -->
-            <div class="lg:col-span-2 space-y-8">
-                <div class="text-center">
-                    <h1 class="text-4xl font-extrabold text-white">PathSync</h1>
-                    <p class="text-gray-400 mt-2">Analyze Google Timeline files to find proximity events.</p>
-                </div>
+            <div class="lg:grid lg:grid-cols-3 lg:gap-12">
+            
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="text-center">
+                        <h1 class="text-4xl font-extrabold text-slate-900">PathSync</h1>
+                        <p class="text-slate-600 mt-2">Analyze Google Timeline files to find proximity events.</p>
+                    </div>
 
-                <!-- Settings Panel -->
-                <div class="space-y-8 pt-8 border-t border-gray-700/50">
-                    <div>
-                        <h2 class="text-lg font-semibold text-gray-200 mb-4">1. Upload Timeline Files</h2>
-                        <div id="file-inputs" class="space-y-3"></div>
-                        <button id="add-file-btn" class="w-full mt-3 text-sm font-medium text-rose-500 hover:text-rose-400 transition">+ Add Another File</button>
+                    <div class="space-y-8 pt-8 border-t border-gray-200">
+                        <div>
+                            <h2 class="text-lg font-semibold text-slate-800 mb-4">1. Upload Timeline Files</h2>
+                            <div id="file-inputs" class="space-y-3"></div>
+                            <button id="add-file-btn" class="w-full mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition">+ Add Another File</button>
+                        </div>
+                        
+                        <div>
+                            <h2 class="text-lg font-semibold text-slate-800 mb-4">2. Set Filters & Thresholds</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="start-date" class="block text-sm font-medium text-slate-600">Start Date</label>
+                                    <input type="date" id="start-date" class="mt-1 block w-full bg-white border-gray-300 text-slate-800 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                </div>
+                                <div>
+                                    <label for="end-date" class="block text-sm font-medium text-slate-600">End Date</label>
+                                    <input type="date" id="end-date" class="mt-1 block w-full bg-white border-gray-300 text-slate-800 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                </div>
+                                <div>
+                                    <label for="distance" class="block text-sm font-medium text-slate-600">Distance (meters)</label>
+                                    <input type="number" id="distance" value="100" class="mt-1 block w-full bg-white border-gray-300 text-slate-800 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                </div>
+                                <div>
+                                    <label for="time" class="block text-sm font-medium text-slate-600">Time (minutes)</label>
+                                    <input type="number" id="time" value="2" class="mt-1 block w-full bg-white border-gray-300 text-slate-800 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div>
-                        <h2 class="text-lg font-semibold text-gray-200 mb-4">2. Set Filters & Thresholds</h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label for="start-date" class="block text-sm font-medium text-gray-400">Start Date</label>
-                                <input type="date" id="start-date" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
-                            </div>
-                            <div>
-                                <label for="end-date" class="block text-sm font-medium text-gray-400">End Date</label>
-                                <input type="date" id="end-date" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
-                            </div>
-                             <div>
-                                <label for="distance" class="block text-sm font-medium text-gray-400">Distance (meters)</label>
-                                <input type="number" id="distance" value="100" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
-                            </div>
-                            <div>
-                                <label for="time" class="block text-sm font-medium text-gray-400">Time (minutes)</label>
-                                <input type="number" id="time" value="2" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2">
+                    <div class="text-center pt-8 border-t border-gray-200">
+                        <button id="run-analysis" class="w-full md:w-auto bg-indigo-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 transition disabled:bg-gray-400">
+                            Run Analysis
+                        </button>
+                    </div>
+
+                    <div id="results-container" class="space-y-6 pt-8 border-t border-gray-200 hidden">
+                        <h2 class="text-3xl font-bold text-center text-slate-900">Analysis Results</h2>
+                        <div id="status" class="text-center text-slate-600 p-4 bg-white rounded-md border border-gray-200 shadow-sm"></div>
+                        <p id="summary" class="text-center font-medium text-lg"></p>
+                        <div id="closest-match-card" class="bg-white border border-gray-200 rounded-lg p-6 space-y-4 hidden shadow-sm animated-card">
+                            <h3 class="text-xl font-semibold text-emerald-600">Closest Match Found</h3>
+                            <div id="closest-match-details" class="space-y-3 text-sm"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-1 mt-12 lg:mt-0">
+                    <div class="sticky top-12">
+                        <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm animated-card">
+                            <h3 class="font-semibold text-slate-800 flex items-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                                How to Get Your Data
+                            </h3>
+                            <div class="text-slate-600 text-sm space-y-4 pt-4 border-t border-gray-200">
+                                <div>
+                                    <h4 class="font-semibold text-slate-700">Method 1: Google Takeout (Desktop)</h4>
+                                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                                        <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-indigo-600 hover:underline">Google Takeout</a> website.</li>
+                                        <li>Click "Deselect all", then scroll and select "Location History".</li>
+                                        <li>Ensure the format is JSON, then "Create export".</li>
+                                    </ol>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-700">Method 2: Google Maps App (Mobile)</h4>
+                                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                                        <li>Open the Google Maps app and tap your profile picture.</li>
+                                        <li>Go to "Your timeline", then tap the three-dot menu (...) and select "Settings and privacy".</li>
+                                        <li>Scroll to "Location settings" and tap "Download a copy of your data".</li>
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Action Button -->
-                <div class="text-center pt-8 border-t border-gray-700/50">
-                    <button id="run-analysis" class="w-full md:w-auto bg-rose-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition disabled:bg-gray-500">
-                        Run Analysis
-                    </button>
-                </div>
 
-                <!-- Results Panel -->
-                <div id="results-container" class="space-y-6 pt-8 border-t border-gray-700/50 hidden">
-                    <h2 class="text-3xl font-bold text-center text-white">Analysis Results</h2>
-                    <div id="status" class="text-center text-gray-400 p-4 bg-gray-800/50 rounded-lg border border-gray-700/80"></div>
-                    <p id="summary" class="text-center font-medium text-lg"></p>
-                    <div id="closest-match-card" class="bg-gray-800/50 border border-gray-700/80 rounded-xl p-6 space-y-4 hidden">
-                        <h3 class="text-xl font-semibold text-rose-400">Closest Match Found</h3>
-                        <div id="closest-match-details" class="space-y-3 text-sm"></div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Right Column: Instructions -->
-            <div class="lg:col-span-1 mt-12 lg:mt-0">
-                <div class="sticky top-28">
-                     <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700/80">
-                        <h3 class="font-semibold text-gray-200 flex items-center mb-4">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                            </svg>
-                            How to Get Your Data
-                        </h3>
-                        <div class="text-gray-400 text-sm space-y-4 pt-4 border-t border-gray-600">
-                             <div>
-                                <h4 class="font-semibold text-gray-200">Method 1: Google Takeout (Desktop)</h4>
-                                <ol class="list-decimal list-inside mt-2 space-y-1">
-                                    <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-rose-500 hover:underline">Google Takeout</a> website.</li>
-                                    <li>Click "Deselect all", then scroll and select "Location History".</li>
-                                    <li>Ensure the format is JSON, then "Create export".</li>
-                                </ol>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-200">Method 2: Google Maps App (Mobile)</h4>
-                                <ol class="list-decimal list-inside mt-2 space-y-1">
-                                    <li>Open the Google Maps app and tap your profile picture.</li>
-                                    <li>Go to "Your timeline", then tap the three-dot menu (...) and select "Settings and privacy".</li>
-                                    <li>Scroll to "Location settings" and tap "Download a copy of your data".</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
+            <footer class="mt-12 border-t border-gray-200">
+                <div class="py-8 text-center text-slate-500">
+                    <p>&copy; 2025 Aiden. All Rights Reserved.</p>
                 </div>
-            </div>
-
-        </div>
-    </main>
-    
-    <!-- Footer -->
-    <footer class="mt-12 border-t border-gray-700/50">
-        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
-            <p>&copy; 2025 Aiden Korbs. All Rights Reserved.</p>
-        </div>
-    </footer>
+            </footer>
+        </main>
+    </div>
 
     <script>
         const fileUploadContainer = document.getElementById('file-inputs');
@@ -169,11 +190,11 @@
             
             const label = document.createElement('label');
             label.htmlFor = input.id;
-            label.className = 'cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-md shadow-sm transition';
+            label.className = 'cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 px-4 rounded-md shadow-sm transition';
             label.textContent = 'Choose File';
 
             const fileNameSpan = document.createElement('span');
-            fileNameSpan.className = 'text-gray-400 text-sm truncate';
+            fileNameSpan.className = 'text-slate-500 text-sm truncate';
             fileNameSpan.textContent = 'No file chosen...';
 
             input.addEventListener('change', () => {
@@ -275,13 +296,13 @@
                 <p><strong>Location:</strong> ${locationName}</p>
                 <p><strong>Distance:</strong> ${(distance_km * 1000).toFixed(2)} meters</p>
                 <p><strong>Time Difference:</strong> ${time_difference.toFixed(2)} seconds</p>
-                <div class="pt-2 mt-2 border-t border-gray-600">
-                    <p class="font-semibold text-rose-400">${file1}:</p>
+                <div class="pt-2 mt-2 border-t border-gray-200">
+                    <p class="font-semibold text-amber-600">${file1}:</p>
                     <p class="pl-2">Lat: ${event1.latitude}, Lon: ${event1.longitude}</p>
                     <p class="pl-2">Timestamp (UTC): ${event1UTC}</p>
                 </div>
-                <div class="pt-2 mt-2 border-t border-gray-600">
-                    <p class="font-semibold text-rose-400">${file2}:</p>
+                <div class="pt-2 mt-2 border-t border-gray-200">
+                    <p class="font-semibold text-rose-600">${file2}:</p>
                     <p class="pl-2">Lat: ${event2.latitude}, Lon: ${event2.longitude}</p>
                     <p class="pl-2">Timestamp (UTC): ${event2UTC}</p>
                 </div>`;

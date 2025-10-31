@@ -3,219 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aiden Korbs - Notes</title>
+    <title>Aiden - Notes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
         }
         .spinner {
-            border-top-color: #f43f5e;
+            border-top-color: #4f46e5;
             animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- Page Load Animation --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .content-fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
+
+        /* --- Gradient Shimmer for H1 --- */
+        @keyframes gradientShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-gradient {
+            background-size: 200% 200%;
+            animation: gradientShimmer 4s ease infinite;
+        }
+
+        /* Sidebar link hover */
+        aside nav a {
+            transition: all 0.2s ease-in-out;
+        }
+        aside nav a:hover {
+            transform: translateX(4px);
+            color: #312e81;
+        }
+
+        /* Card hover */
+        .animated-card {
+            transition: all 0.2s ease-in-out;
+        }
+        .animated-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07),
+                        0 4px 6px -4px rgb(0 0 0 / 0.07);
         }
         
-        /* --- Enhanced Markdown Styling --- */
-        #note-viewer-content h1, 
-        #note-viewer-content h2, 
-        #note-viewer-content h3 {
-            color: white;
-            border-bottom: 1px solid #374151; /* border-gray-700 */
+        /* --- Tag Hover Animation --- */
+        .animated-tag {
+            display: inline-block; /* Ensures transform works */
+            transition: all 0.2s ease-in-out;
+        }
+        .animated-tag:hover {
+            transform: scale(1.1);
+        }
+
+        /* Markdown styles */
+        #note-viewer-content h1, #note-viewer-content h2, #note-viewer-content h3 {
+            color: #1e293b;
+            border-bottom: 1px solid #e5e7eb;
             padding-bottom: 0.5rem;
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
-        #note-viewer-content p { 
-            margin-bottom: 1rem; 
-            color: #d1d5db; /* text-gray-300 */
+        #note-viewer-content p {
+            margin-bottom: 1rem;
+            color: #475569;
             line-height: 1.6;
         }
-        #note-viewer-content a { 
-            color: #f43f5e; /* text-rose-500 */
+        #note-viewer-content a {
+            color: #4f46e5;
             text-decoration: underline;
         }
-        #note-viewer-content code { 
-            background-color: #1f2937; /* bg-gray-800 */
-            padding: 0.2rem 0.4rem; 
-            border-radius: 0.25rem; 
+        #note-viewer-content code {
+            background-color: #eef2ff;
+            color: #3730a3;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
             font-size: 0.9em;
         }
-        #note-viewer-content pre { 
-            background-color: #1f2937; /* bg-gray-800 */
-            padding: 1rem; 
-            border-radius: 0.5rem; 
-            overflow-x: auto; 
+        #note-viewer-content pre {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            overflow-x: auto;
             margin-bottom: 1rem;
         }
         #note-viewer-content pre code {
-             padding: 0;
-             background-color: transparent;
+            background-color: transparent;
+            color: #334155;
         }
-        #note-viewer-content ul { 
-            list-style-type: disc; 
-            padding-left: 2rem; 
-            margin-bottom: 1rem; 
-            color: #d1d5db;
+        #note-viewer-content ul, #note-viewer-content ol {
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            color: #475569;
         }
-        #note-viewer-content ol { 
-            list-style-type: decimal; 
-            padding-left: 2rem; 
-            margin-bottom: 1rem; 
-            color: #d1d5db;
-        }
-        #note-viewer-content li { 
-            margin-bottom: 0.5rem; 
-        }
-        #note-viewer-content blockquote { 
-            border-left: 4px solid #4b5563; /* border-gray-600 */
-            padding-left: 1rem; 
-            margin: 1.5rem 0; 
-            color: #9ca3af; /* text-gray-400 */
+        #note-viewer-content li { margin-bottom: 0.5rem; }
+        #note-viewer-content blockquote {
+            border-left: 4px solid #a5b4fc;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #64748b;
             font-style: italic;
         }
-        #note-viewer-content table { 
-            width: 100%; 
-            border-collapse: collapse; 
+        #note-viewer-content table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 1.5rem;
-            border: 1px solid #374151; /* border-gray-700 */
+            border: 1px solid #e5e7eb;
         }
-        #note-viewer-content th { 
-            background-color: #1f2937; /* bg-gray-800 */
-            padding: 0.75rem; 
-            border: 1px solid #374151; /* border-gray-700 */
+        #note-viewer-content th, #note-viewer-content td {
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+        #note-viewer-content th {
+            background-color: #f8fafc;
             text-align: left;
             font-weight: 600;
+            color: #334155;
         }
-        #note-viewer-content td { 
-            padding: 0.75rem; 
-            border: 1px solid #374151; /* border-gray-700 */
+        #note-viewer-content tr:nth-child(even) {
+            background-color: #f8fafc;
         }
-        #note-viewer-content tr:nth-child(even) { 
-            background-color: #1f2937; /* bg-gray-800 */
-        }
-        
-        /* --- NEW: Style for Obsidian Links --- */
         #note-viewer-content a.obsidian-link {
-            color: #60a5fa; /* text-blue-400 */
+            color: #6366f1;
             text-decoration: none;
-            border-bottom: 1px dashed #60a5fa;
+            border-bottom: 1px dashed #6366f1;
             opacity: 0.8;
         }
         #note-viewer-content a.obsidian-link:hover {
-            color: #3b82f6; /* text-blue-500 */
+            color: #4338ca;
             border-bottom-style: solid;
             opacity: 1;
         }
+
+        /* ✅ MathJax styling */
+        mjx-container {
+            font-size: 1.05em;
+            color: #1e293b;
+        }
+        mjx-container[jax="CHTML"][display="true"] {
+            display: block;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
     </style>
 </head>
-<body class="text-gray-200 min-h-screen">
 
-    <!-- Header -->
-    <header class="border-b border-gray-700/50 sticky top-0 bg-gray-900/80 backdrop-blur-sm z-10">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-xl font-bold text-white hover:text-rose-400 transition-colors">Aiden Korbs</a>
-            <div class="flex items-center space-x-6">
-                <a href="index.html" class="text-gray-400 hover:text-white transition-colors font-medium">Projects</a>
-                <a href="notes.html" class="text-white font-medium">Notes</a>
-                <a href="about.html" class="text-gray-400 hover:text-white transition-colors font-medium">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-                </a>
-            </div>
+<body class="flex min-h-screen bg-gray-100 text-slate-700">
+
+    <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col p-6 sticky top-0 h-screen">
+        <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-indigo-600 transition-colors mb-8">Aiden</a>
+        <nav class="flex flex-col space-y-3">
+            <a href="index.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">Projects</a>
+            <a href="notes.html" class="text-lg font-semibold text-indigo-600 transition-colors">Notes</a>
+            <a href="about.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">About</a>
         </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 py-12">
-        <div class="max-w-4xl mx-auto">
-            <h1 id="repo-title" class="text-4xl font-extrabold text-white mb-8"></h1>
-            <p id="repo-description" class="text-gray-400 mb-12"></p>
-            <!-- Notes grid is now a container for folder sections -->
-            <div id="notes-grid" class="space-y-12">
-                <!-- Folder sections will be dynamically inserted here -->
-            </div>
+        <div class="mt-auto">
+            <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-slate-600 transition-colors">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                </svg>
+            </a>
         </div>
-    </main>
+    </aside>
 
-    <!-- Note Viewer Modal -->
-    <div id="note-viewer" class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="bg-gray-800 border border-gray-700/80 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center p-4 border-b border-gray-700/80">
-                <h2 id="note-viewer-title" class="text-xl font-bold text-white"></h2>
-                <button id="close-viewer-btn" class="text-gray-400 hover:text-white">&times;</button>
+    <div class="flex-grow overflow-y-auto h-screen">
+        <main class="max-w-5xl mx-auto px-10 py-12 content-fade-in">
+            <h1 id="repo-title" class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-8 animated-gradient"></h1>
+            <p id="repo-description" class="text-slate-600 mb-12"></p>
+            <div id="notes-grid" class="space-y-12"></div>
+
+            <footer class="mt-12 border-t border-gray-200">
+                <div class="py-8 text-center text-slate-500">
+                    <p>&copy; 2025 Aiden. All Rights Reserved.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <div id="note-viewer" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-white border-gray-200 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                <h2 id="note-viewer-title" class="text-xl font-bold text-slate-900"></h2>
+                <button id="close-viewer-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
             </div>
             <div class="p-6 overflow-y-auto">
                 <div id="note-viewer-content"></div>
             </div>
-             <div class="p-4 border-t border-gray-700/80 text-right">
-                <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-rose-500 hover:text-rose-400 transition-colors">View on GitHub &rarr;</a>
+            <div class="p-4 border-t border-gray-200 text-right">
+                <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">View on GitHub &rarr;</a>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-12 border-t border-gray-700/50">
-        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
-            <p>&copy; 2025 Aiden Korbs. All Rights Reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        // --- SCRIPT LOGIC ---
+        // This script block runs AFTER the page (and MathJax) is loaded
+
         const notesGrid = document.getElementById('notes-grid');
         const noteViewer = document.getElementById('note-viewer');
         const noteViewerTitle = document.getElementById('note-viewer-title');
         const noteViewerContent = document.getElementById('note-viewer-content');
         const closeViewerBtn = document.getElementById('close-viewer-btn');
         const repoLink = document.getElementById('repo-link');
-        
-        // --- NEW: Global vars for link handling ---
-        let allMdFiles = []; // To store all found .md paths
-        let currentOwner = ''; // To store current owner
-        let currentRepo = ''; // To store current repo
-        
+
+        let allMdFiles = [];
+        let currentOwner = '';
+        let currentRepo = '';
+
         const showdownConverter = new showdown.Converter({
             tables: true,
             tasklists: true,
             simplifiedAutoLink: true,
             strikethrough: true,
-            ghCompatibleHeaderId: true
+            ghCompatibleHeaderId: true,
+            // ✅ THIS IS THE FIX:
+            // It stops Showdown from treating M_x as M<em>x</em>
+            literalMidWordUnderscores: true
         });
-        
-        // --- NEW: Showdown extension for [[Obsidian-style]] links ---
-        showdown.extension('obsidianlinks', () => {
-            return [{
-                type: 'lang', // language extension
-                regex: /\[\[([^\]]+)\]\]/g, // Find [[Note Name]]
-                replace: (match, noteName) => {
-                    // Create a link that we can intercept later
-                    // We use data-note-name to store the target for our click handler
-                    return `<a href="#" class="obsidian-link" data-note-name="${noteName}">${noteName}</a>`;
-                }
-            }];
-        });
-        // Register the extension
+
+        showdown.extension('obsidianlinks', () => [{
+            type: 'lang',
+            regex: /\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g,
+            replace: (match, target, alias) => {
+                const noteName = target.trim();
+                const displayText = alias ? alias.trim() : noteName;
+                return `<a href="#" class="obsidian-link" data-note-name="${noteName}">${displayText}</a>`;
+            }
+        }]);
         showdownConverter.addExtension('obsidianlinks');
-        // --- END NEW ---
 
         const urlParams = new URLSearchParams(window.location.search);
         const owner = urlParams.get('owner');
         const repo = urlParams.get('repo');
-        // --- NEW: Store owner/repo globally ---
         currentOwner = owner;
         currentRepo = repo;
-        
+
         document.getElementById('repo-title').textContent = repo ? `Notes: ${repo}` : 'Notes Viewer';
         document.getElementById('repo-description').textContent = repo ? `Browsing all Markdown notes found in the '${repo}' repository.` : 'Specify a repository in the URL to view its notes.';
 
-        // Fetches the tree of a repo to find all .md files, ignoring READMEs
         async function getMdFilesFromRepo(owner, repo) {
             try {
                 const branchResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
@@ -226,11 +277,9 @@
                 const treeResponse = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${defaultBranch}?recursive=1`);
                 if (!treeResponse.ok) throw new Error(`Could not fetch repo tree. Status: ${treeResponse.status}`);
                 const treeData = await treeResponse.json();
-                
+
                 return treeData.tree
-                    .filter(file => file.path.endsWith('.md') && 
-                                   !file.path.toLowerCase().endsWith('readme.md') && 
-                                   file.type === 'blob')
+                    .filter(file => file.path.endsWith('.md') && !file.path.toLowerCase().endsWith('readme.md') && file.type === 'blob')
                     .map(file => file.path);
             } catch (error) {
                 console.error(`Failed to get files for ${owner}/${repo}:`, error);
@@ -238,19 +287,15 @@
             }
         }
 
-        // Creates a card for a specific .md file
         function createNoteCard(filePath, owner, repo) {
             const card = document.createElement('div');
-            card.className = 'block cursor-pointer bg-gray-800/50 p-6 rounded-lg border border-gray-700/80 hover:border-rose-500/80 transition-all duration-300 transform hover:-translate-y-1';
-            
+            card.className = 'block cursor-pointer bg-white p-6 rounded-md border border-gray-200 hover:border-indigo-500 transition-colors duration-300 shadow-sm animated-card';
             const title = filePath.split('/').pop().replace('.md', '').replace(/[-_]/g, ' ');
-            
-            card.innerHTML = `<h3 class="text-xl font-bold text-white capitalize">${title}</h3> <p class="mt-2 text-gray-500 text-xs truncate">File: ${filePath}</p>`;
+            card.innerHTML = `<h3 class="text-xl font-bold text-slate-900 capitalize">${title}</h3> <p class="mt-2 text-slate-500 text-xs truncate">File: ${filePath}</p>`;
             card.addEventListener('click', () => fetchAndShowFile(owner, repo, title, filePath));
             return card;
         }
 
-        // Fetches and displays the content of a specific file
         async function fetchAndShowFile(owner, repo, title, filePath) {
             noteViewerTitle.textContent = title;
             noteViewerContent.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div></div>';
@@ -262,40 +307,33 @@
                 const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`);
                 if (!response.ok) throw new Error(`GitHub API Error: ${response.status}`);
                 const data = await response.json();
-                
-                // Decode Base64 (atob) to a byte string
                 const binaryString = atob(data.content);
-                // Get the length of the byte string
                 const len = binaryString.length;
-                // Create a an array of 8-bit unsigned integers
                 const bytes = new Uint8Array(len);
-                // Populate the array with the character codes of the byte string
-                for (let i = 0; i < len; i++) {
-                    bytes[i] = binaryString.charCodeAt(i);
-                }
-                // Decode the UTF-8 bytes into a proper string
-                const textDecoder = new TextDecoder('utf-8');
-                const markdownContent = textDecoder.decode(bytes);
-                
+                for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
+                const markdownContent = new TextDecoder('utf-8').decode(bytes);
+
                 noteViewerContent.innerHTML = showdownConverter.makeHtml(markdownContent);
+
+                // Trigger MathJax rendering
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise([noteViewerContent]);
+                }
+
             } catch (error) {
                 console.error("Error fetching file:", error);
-                noteViewerContent.innerHTML = `<p class="text-red-400">Could not load notes.</p><p class="text-gray-500 text-xs">${error.message}</p>`;
+                noteViewerContent.innerHTML = `<p class="text-red-400">Could not load notes.</p><p class="text-slate-500 text-xs">${error.message}</p>`;
             }
         }
-        
-        // --- NEW: Function to find and open a linked note ---
-        function findAndOpenNote(noteName) {
-            const normalize = (str) => str.toLowerCase().replace(/[-_ ]/g, '');
-            const targetNormalized = normalize(noteName);
 
-            let foundPath = null;
+        function findAndOpenNote(noteName, displayTitle) {
+            const normalize = str => str.toLowerCase().replace(/[-_ ]/g, '');
+            const targetNormalized = normalize(noteName);
             
-            // Search for a file that matches the note name
+            let foundPath = null;
             for (const filePath of allMdFiles) {
                 const fileName = filePath.split('/').pop().replace('.md', '');
                 const fileNormalized = normalize(fileName);
-                
                 if (fileNormalized === targetNormalized) {
                     foundPath = filePath;
                     break;
@@ -303,16 +341,12 @@
             }
 
             if (foundPath) {
-                // Found it. Open it in the viewer.
-                fetchAndShowFile(currentOwner, currentRepo, noteName, foundPath);
+                fetchAndShowFile(currentOwner, currentRepo, displayTitle, foundPath);
             } else {
-                // Could not find note.
                 alert(`Note not found: "${noteName}"`);
             }
         }
-        // --- END NEW ---
-        
-        // Main function to populate the entire page
+
         async function populateNotesPage() {
             if (!owner || !repo) {
                 notesGrid.innerHTML = '<p class="text-red-400 text-center">Error: Repository owner and name not specified in the URL. Example: ?owner=yourname&repo=yourrepo</p>';
@@ -323,17 +357,16 @@
             notesGrid.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div><p class="ml-4">Scanning repository...</p></div>';
             
             const mdFiles = await getMdFilesFromRepo(owner, repo);
-            allMdFiles = mdFiles; // --- NEW: Store file list globally
+            allMdFiles = mdFiles;
             
             if (mdFiles.length > 0) {
-                notesGrid.innerHTML = ''; // Clear loading spinner
+                notesGrid.innerHTML = '';
                 
-                // Group files by folder
                 const groupedFiles = mdFiles.reduce((acc, filePath) => {
                     const parts = filePath.split('/');
-                    let folder = 'root'; // Default for files in the root
+                    let folder = 'root';
                     if (parts.length > 1) {
-                        folder = parts.slice(0, -1).join('/'); // Get the full path as folder name
+                        folder = parts.slice(0, -1).join('/');
                     }
                     if (!acc[folder]) {
                         acc[folder] = [];
@@ -342,103 +375,67 @@
                     return acc;
                 }, {});
 
-                // Custom natural sort function
                 function naturalSort(a, b) {
                     if (a === 'root') return -1;
                     if (b === 'root') return 1;
-                    
-                    // Regex to find sequences of digits
                     const re = /(\d+)/g;
-                    // Split strings into parts of text and numbers
                     const partsA = a.split(re);
                     const partsB = b.split(re);
-
                     for (let i = 0; i < Math.min(partsA.length, partsB.length); i++) {
                         const partA = partsA[i];
                         const partB = partsB[i];
-
-                        // If the part is a number (it will be at an odd index after split)
                         if (i % 2 === 1) {
                             const numA = parseInt(partA, 10);
                             const numB = parseInt(partB, 10);
-                            if (numA !== numB) {
-                                return numA - numB; // Compare numerically
-                            }
+                            if (numA !== numB) return numA - numB;
                         } else {
-                            // Compare as strings
-                            if (partA !== partB) {
-                                return partA.localeCompare(partB);
-                            }
+                            if (partA !== partB) return partA.localeCompare(partB);
                         }
                     }
-                    // If one is a prefix of the other, shorter one comes first
                     return partsA.length - partsB.length;
                 }
 
-                // Sort folder names using natural sort, putting 'root' first
                 const sortedFolders = Object.keys(groupedFiles).sort(naturalSort);
-
-                // --- Find and remove common root folder path ---
                 let commonPrefix = '';
                 const nonRootFolders = sortedFolders.filter(f => f !== 'root');
 
                 if (nonRootFolders.length > 0) {
-                    // Split all paths into components
                     const paths = nonRootFolders.map(f => f.split('/'));
-                    
-                    // Find the shortest path length
                     const minLength = Math.min(...paths.map(p => p.length));
-                    
-                    // Find common prefix components
                     let prefixComponents = [];
                     for (let i = 0; i < minLength; i++) {
-                        const component = paths[0][i]; // Get component from first path
-                        // Check if this component is the same in all other paths
+                        const component = paths[0][i];
                         if (paths.every(p => p[i] === component)) {
                             prefixComponents.push(component);
                         } else {
-                            break; // Stop at the first difference
+                            break;
                         }
                     }
-
                     if (prefixComponents.length > 0) {
                         const tempPrefix = prefixComponents.join('/') + '/';
-                        // Check if *all* non-root folders start with this path (or are this path)
                         if (nonRootFolders.every(f => f.startsWith(tempPrefix) || f === prefixComponents.join('/'))) {
                              commonPrefix = tempPrefix;
                         }
                     }
                 }
-                // --- END ---
 
-                // Iterate over sorted folders and create sections
                 sortedFolders.forEach(folder => {
                     const sectionContainer = document.createElement('div');
-                    
                     const folderTitle = document.createElement('h2');
-                    folderTitle.className = 'text-3xl font-bold text-white mb-6 border-b border-gray-700/80 pb-3 capitalize';
+                    folderTitle.className = 'text-3xl font-bold text-slate-900 mb-6 border-b border-gray-200 pb-3 capitalize';
                     
-                    // --- UPDATED: Clean up folder name for display ---
                     let displayFolderName = folder;
                     if (folder === 'root') {
                         displayFolderName = 'General Notes';
                     } else if (commonPrefix && folder.startsWith(commonPrefix)) {
-                        // Remove the common prefix for a cleaner title
                         displayFolderName = folder.substring(commonPrefix.length);
-                        
-                        // If substring is empty, it was the root folder itself (e.g., "EGH418")
-                        // In that case, we show the root folder name without the trailing slash
                         if (displayFolderName === '') {
                             displayFolderName = folder; 
                         }
                     }
-                    
-                    // Final cleanup for display
                     folderTitle.textContent = displayFolderName.replace(/[-_]/g, ' ');
-                    // --- END UPDATED ---
 
                     sectionContainer.appendChild(folderTitle);
-
                     const folderGrid = document.createElement('div');
                     folderGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
                     
@@ -452,28 +449,36 @@
                 });
 
             } else {
-                notesGrid.innerHTML = '<p class="text-gray-500 text-center">No Markdown files (excluding READMEs) found in this repository.</p>';
+                notesGrid.innerHTML = '<p class="text-slate-500 text-center">No Markdown files (excluding READMEs) found in this repository.</p>';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', populateNotesPage);
+        // Event listeners
+        closeViewerBtn.addEventListener('click', () => {
+            noteViewer.classList.add('hidden');
+            noteViewer.classList.remove('flex');
+        });
 
-        closeViewerBtn.addEventListener('click', () => noteViewer.classList.add('hidden'));
         noteViewer.addEventListener('click', (e) => {
-            if (e.target === noteViewer) noteViewer.classList.add('hidden');
+            if (e.target === noteViewer) {
+                noteViewer.classList.add('hidden');
+                noteViewer.classList.remove('flex');
+            }
         });
         
-        // --- NEW: Event delegation for Obsidian links ---
         noteViewerContent.addEventListener('click', (e) => {
             const link = e.target.closest('a.obsidian-link');
             if (link) {
                 e.preventDefault();
                 const targetNoteName = link.getAttribute('data-note-name');
-                findAndOpenNote(targetNoteName);
+                const displayTitle = link.innerText; // Get the alias text
+                findAndOpenNote(targetNoteName, displayTitle);
             }
         });
+        
+        // Start loading the page content
+        populateNotesPage();
 
     </script>
 </body>
 </html>
-
