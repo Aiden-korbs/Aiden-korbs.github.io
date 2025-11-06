@@ -7,53 +7,37 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-
-        /* --- Page Load Animation --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .nav-link {
+            position: relative;
         }
-        .content-fade-in {
-            animation: fadeIn 0.5s ease-in-out forwards;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 2px;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
         }
-
-        /* --- Gradient Shimmer for H1 --- */
-        @keyframes gradientShimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .nav-link:hover::after,
+        .nav-link-active::after {
+            width: 100%;
         }
-        .animated-gradient {
-            background-size: 200% 200%;
-            animation: gradientShimmer 4s ease infinite;
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        /* --- Sidebar Link Hover --- */
-        aside nav a {
-            transition: all 0.2s ease-in-out;
-        }
-        aside nav a:hover {
-            transform: translateX(4px);
-            color: #312e81; /* indigo-900 */
-        }
-
-        /* --- Card Hover Animation --- */
-        .animated-card {
-            transition: all 0.2s ease-in-out;
-        }
-        .animated-card:hover {
+        .card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-
-        /* --- Tag Hover Animation --- */
         .animated-tag {
-            display: inline-block; /* Ensures transform works */
+            display: inline-block;
             transition: all 0.2s ease-in-out;
         }
         .animated-tag:hover {
@@ -61,72 +45,72 @@
         }
     </style>
 </head>
-<body class="flex min-h-screen bg-gray-100 text-slate-700">
+<body class="bg-neutral-50 text-gray-800">
 
-    <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col p-6 sticky top-0 h-screen">
-        <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-indigo-600 transition-colors mb-8">Aiden</a>
-        <nav class="flex flex-col space-y-3">
-            <a href="index.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">Projects</a>
-            <a href="notes.html" class="text-lg font-semibold text-indigo-600 transition-colors">Notes</a>
-            <a href="about.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">About</a>
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+            <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Korbs</a>
+            <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
+                <a href="index.html" class="nav-link hover:text-blue-600">Projects</a>
+                <a href="notes.html" class="nav-link nav-link-active text-blue-600">Notes</a>
+                <a href="about.html" class="nav-link hover:text-blue-600">About</a>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
         </nav>
-        <div class="mt-auto"> <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-slate-600 transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-            </a>
-        </div>
-    </aside>
+    </header>
 
-    <div class="flex-grow overflow-y-auto h-screen">
-        <main class="max-w-5xl mx-auto px-10 py-12 content-fade-in">
+    <main class="max-w-6xl mx-auto px-6 py-20">
+        
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Notes Collections</h1>
+        <p class="text-gray-600 mb-12">A collection of notes, code snippets, and resources from various projects and university subjects. Select a collection to view all the notes within.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-8 animated-gradient">Notes Collections</h1>
-            <p class="text-slate-600 mb-12">A collection of notes, code snippets, and resources from various projects and university subjects. Select a collection to view all the notes within.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGH418-Munificant-Passages" class="block bg-white p-6 rounded-md border border-gray-200 hover:border-indigo-500 transition-colors duration-300 shadow-sm animated-card">
-                    <h3 class="text-xl font-bold text-slate-900">EGH418 - Munificant Passages</h3>
-                    <p class="mt-2 text-slate-600 text-sm">Notes and resources for the EGH418 unit, covering topics on Biomechincal systems.</p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">Mechatronics</span>
-                        <span class="bg-emerald-100 text-emerald-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">University</span>
-                        <span class="bg-rose-100 text-rose-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">QUT</span>
-                    </div>
-                </a>
-
-                <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH456-HolyGrail" class="block bg-white p-6 rounded-md border border-gray-200 hover:border-indigo-500 transition-colors duration-300 shadow-sm animated-card">
-                    <h3 class="text-xl font-bold text-slate-900">EGH456 - HolyGrail</h3>
-                    <p class="mt-2 text-slate-600 text-sm">Notes and resources for the EGH456 unit, covering topics on mechatronic systems design.</p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="bg-emerald-100 text-emerald-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">Mechatronics</span>
-                        <span class="bg-rose-100 text-rose-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">University</span>
-                        <span class="bg-indigo-100 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">QUT</span>
-                    </div>
-                </a>
-
-                <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH446" class="block bg-white p-6 rounded-md border border-gray-200 hover:border-indigo-500 transition-colors duration-300 shadow-sm animated-card">
-                    <h3 class="text-xl font-bold text-slate-900">EGH446 - Malevolent Texts</h3>
-                    <p class="mt-2 text-slate-600 text-sm">Notes and resources for the EGH446 covering autonomous systems.</p>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="bg-rose-100 text-rose-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">Mechatronics</span>
-                        <span class="bg-indigo-100 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">University</span>
-                        <span class="bg-emerald-100 text-emerald-700 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">QUT</span>
-                    </div>
-                </a>
-                
-                <div class="bg-white p-6 rounded-md border border-dashed border-gray-300 flex items-center justify-center">
-                    <p class="text-gray-400">More note collections coming soon...</p>
+            <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGH418-Munificant-Passages" class="card block bg-neutral-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold text-gray-900">EGH418 - Munificant Passages</h3>
+                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGH418 unit, covering topics on Biomechincal systems.</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">Mechatronics</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">University</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">QUT</span>
                 </div>
+            </a>
 
+            <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH456-HolyGrail" class="card block bg-neutral-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold text-gray-900">EGH456 - HolyGrail</h3>
+                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGH456 unit, covering topics on mechatronic systems design.</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">Mechatronics</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">University</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">QUT</span>
+                </div>
+            </a>
+
+            <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH446" class="card block bg-neutral-100 p-6 rounded-lg">
+                <h3 class="text-xl font-bold text-gray-900">EGH446 - Malevolent Texts</h3>
+                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGH446 covering autonomous systems.</p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">Mechatronics</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">University</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full animated-tag">QUT</span>
+                </div>
+            </a>
+            
+            <div class="card bg-neutral-100 p-6 rounded-lg border border-dashed border-gray-300 flex items-center justify-center">
+                <p class="text-gray-400">More note collections coming soon...</p>
             </div>
 
-            <footer class="mt-12 border-t border-gray-200">
-                <div class="py-8 text-center text-slate-500">
-                    <p>&copy; 2025 Aiden. All Rights Reserved.</p>
-                </div>
-            </footer>
-        </main>
-    </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 py-10 mt-20">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm">© 2025 Aiden Korbs. All Rights Reserved.</p>
+        <a href="https://github.com/Aiden-korbs" target="_blank" class="hover:text-white mt-4 md:mt-0">GitHub →</a>
+        </div>
+    </footer>
 
 </body>
 </html>

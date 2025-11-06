@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <script>
         window.MathJax = {
@@ -30,85 +30,66 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0%;
+            height: 2px;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link-active::after {
+            width: 100%;
+        }
+        .card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
         .spinner {
-            border-top-color: #4f46e5;
+            border-top-color: #2563eb; /* blue-600 */
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- Page Load Animation --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .content-fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
-
-        /* --- Gradient Shimmer for H1 --- */
-        @keyframes gradientShimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .animated-gradient {
-            background-size: 200% 200%;
-            animation: gradientShimmer 4s ease infinite;
-        }
-
-        /* Sidebar link hover */
-        aside nav a {
-            transition: all 0.2s ease-in-out;
-        }
-        aside nav a:hover {
-            transform: translateX(4px);
-            color: #312e81;
-        }
-
-        /* Card hover */
-        .animated-card {
-            transition: all 0.2s ease-in-out;
-        }
-        .animated-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07),
-                        0 4px 6px -4px rgb(0 0 0 / 0.07);
-        }
         
-        /* --- Tag Hover Animation --- */
-        .animated-tag {
-            display: inline-block; /* Ensures transform works */
-            transition: all 0.2s ease-in-out;
-        }
-        .animated-tag:hover {
-            transform: scale(1.1);
-        }
-
         /* Markdown styles */
-        #note-viewer-content h1, #note-viewer-content h2, #note-viewer-content h3 {
-            color: #1e293b;
-            border-bottom: 1px solid #e5e7eb;
+        #note-viewer-content h1, 
+        #note-viewer-content h2, 
+        #note-viewer-content h3 {
+            color: #1f2937; /* gray-900 */
+            border-bottom: 1px solid #e5e7eb; /* gray-200 */
             padding-bottom: 0.5rem;
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
         #note-viewer-content p {
             margin-bottom: 1rem;
-            color: #475569;
+            color: #4b5563; /* gray-600 */
             line-height: 1.6;
         }
         #note-viewer-content a {
-            color: #4f46e5;
+            color: #2563eb; /* blue-600 */
             text-decoration: underline;
         }
         #note-viewer-content code {
-            background-color: #eef2ff;
-            color: #3730a3;
+            background-color: #dbeafe; /* blue-100 */
+            color: #1d4ed8; /* blue-800 */
             padding: 0.2rem 0.4rem;
             border-radius: 0.25rem;
             font-size: 0.9em;
         }
         #note-viewer-content pre {
-            background-color: #f8fafc;
-            border: 1px solid #e5e7eb;
+            background-color: #f5f5f5; /* neutral-100 */
+            border: 1px solid #e5e7eb; /* gray-200 */
             padding: 1rem;
             border-radius: 0.375rem;
             overflow-x: auto;
@@ -116,56 +97,56 @@
         }
         #note-viewer-content pre code {
             background-color: transparent;
-            color: #334155;
+            color: #404040; /* neutral-700 */
         }
         #note-viewer-content ul, #note-viewer-content ol {
             padding-left: 2rem;
             margin-bottom: 1rem;
-            color: #475569;
+            color: #4b5563; /* gray-600 */
         }
         #note-viewer-content li { margin-bottom: 0.5rem; }
         #note-viewer-content blockquote {
-            border-left: 4px solid #a5b4fc;
+            border-left: 4px solid #93c5fd; /* blue-300 */
             padding-left: 1rem;
             margin: 1.5rem 0;
-            color: #64748b;
+            color: #737373; /* neutral-500 */
             font-style: italic;
         }
         #note-viewer-content table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 1.5rem;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e5e7eb; /* gray-200 */
         }
         #note-viewer-content th, #note-viewer-content td {
             padding: 0.75rem;
             border: 1px solid #e5e7eb;
         }
         #note-viewer-content th {
-            background-color: #f8fafc;
+            background-color: #f5f5f5; /* neutral-100 */
             text-align: left;
             font-weight: 600;
-            color: #334155;
+            color: #404040; /* neutral-700 */
         }
         #note-viewer-content tr:nth-child(even) {
-            background-color: #f8fafc;
+            background-color: #f5f5f5; /* neutral-100 */
         }
         #note-viewer-content a.obsidian-link {
-            color: #6366f1;
+            color: #2563eb; /* blue-600 */
             text-decoration: none;
-            border-bottom: 1px dashed #6366f1;
+            border-bottom: 1px dashed #2563eb;
             opacity: 0.8;
         }
         #note-viewer-content a.obsidian-link:hover {
-            color: #4338ca;
+            color: #1d4ed8; /* blue-800 */
             border-bottom-style: solid;
             opacity: 1;
         }
 
-        /* ✅ MathJax styling */
+        /* MathJax styling */
         mjx-container {
             font-size: 1.05em;
-            color: #1e293b;
+            color: #1f2937; /* gray-900 */
         }
         mjx-container[jax="CHTML"][display="true"] {
             display: block;
@@ -175,49 +156,47 @@
     </style>
 </head>
 
-<body class="flex min-h-screen bg-gray-100 text-slate-700">
+<body class="bg-neutral-50 text-gray-800">
 
-    <aside class="w-64 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col p-6 sticky top-0 h-screen">
-        <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-indigo-600 transition-colors mb-8">Aiden</a>
-        <nav class="flex flex-col space-y-3">
-            <a href="index.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">Projects</a>
-            <a href="notes.html" class="text-lg font-semibold text-indigo-600 transition-colors">Notes</a>
-            <a href="about.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">About</a>
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+            <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Korbs</a>
+            <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
+                <a href="index.html" class="nav-link hover:text-blue-600">Projects</a>
+                <a href="notes.html" class="nav-link nav-link-active text-blue-600">Notes</a>
+                <a href="about.html" class="nav-link hover:text-blue-600">About</a>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
         </nav>
-        <div class="mt-auto">
-            <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-slate-600 transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
-                </svg>
-            </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-20 min-h-screen">
+        <h1 id="repo-title" class="text-4xl font-extrabold text-gray-900 mb-4"></h1>
+        <p id="repo-description" class="text-gray-600 mb-12"></p>
+        <div id="notes-grid" class="space-y-12"></div>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-300 py-10 mt-20">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm">© 2025 Aiden Korbs. All Rights Reserved.</p>
+        <a href="https://github.com/Aiden-korbs" target="_blank" class="hover:text-white mt-4 md:mt-0">GitHub →</a>
         </div>
-    </aside>
+    </footer>
 
-    <div class="flex-grow overflow-y-auto h-screen">
-        <main class="max-w-5xl mx-auto px-10 py-12 content-fade-in">
-            <h1 id="repo-title" class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-500 mb-8 animated-gradient"></h1>
-            <p id="repo-description" class="text-slate-600 mb-12"></p>
-            <div id="notes-grid" class="space-y-12"></div>
 
-            <footer class="mt-12 border-t border-gray-200">
-                <div class="py-8 text-center text-slate-500">
-                    <p>&copy; 2025 Aiden. All Rights Reserved.</p>
-                </div>
-            </footer>
-        </main>
-    </div>
-
-    <div id="note-viewer" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div id="note-viewer" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="bg-white border-gray-200 rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center p-4 border-b border-gray-200">
-                <h2 id="note-viewer-title" class="text-xl font-bold text-slate-900"></h2>
+                <h2 id="note-viewer-title" class="text-xl font-bold text-gray-900"></h2>
                 <button id="close-viewer-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
             </div>
             <div class="p-6 overflow-y-auto">
                 <div id="note-viewer-content"></div>
             </div>
             <div class="p-4 border-t border-gray-200 text-right">
-                <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">View on GitHub &rarr;</a>
+                <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">View on GitHub &rarr;</a>
             </div>
         </div>
     </div>
@@ -242,8 +221,6 @@
             simplifiedAutoLink: true,
             strikethrough: true,
             ghCompatibleHeaderId: true,
-            // ✅ THIS IS THE FIX:
-            // It stops Showdown from treating M_x as M<em>x</em>
             literalMidWordUnderscores: true
         });
 
@@ -289,9 +266,11 @@
 
         function createNoteCard(filePath, owner, repo) {
             const card = document.createElement('div');
-            card.className = 'block cursor-pointer bg-white p-6 rounded-md border border-gray-200 hover:border-indigo-500 transition-colors duration-300 shadow-sm animated-card';
+            // UPDATED CLASSNAME
+            card.className = 'block cursor-pointer bg-neutral-100 p-6 rounded-lg card';
             const title = filePath.split('/').pop().replace('.md', '').replace(/[-_]/g, ' ');
-            card.innerHTML = `<h3 class="text-xl font-bold text-slate-900 capitalize">${title}</h3> <p class="mt-2 text-slate-500 text-xs truncate">File: ${filePath}</p>`;
+            // UPDATED TEXT COLORS
+            card.innerHTML = `<h3 class="text-xl font-bold text-gray-900 capitalize">${title}</h3> <p class="mt-2 text-gray-500 text-xs truncate">File: ${filePath}</p>`;
             card.addEventListener('click', () => fetchAndShowFile(owner, repo, title, filePath));
             return card;
         }
@@ -315,14 +294,13 @@
 
                 noteViewerContent.innerHTML = showdownConverter.makeHtml(markdownContent);
 
-                // Trigger MathJax rendering
                 if (window.MathJax && window.MathJax.typesetPromise) {
                     window.MathJax.typesetPromise([noteViewerContent]);
                 }
 
             } catch (error) {
                 console.error("Error fetching file:", error);
-                noteViewerContent.innerHTML = `<p class="text-red-400">Could not load notes.</p><p class="text-slate-500 text-xs">${error.message}</p>`;
+                noteViewerContent.innerHTML = `<p class="text-red-400">Could not load notes.</p><p class="text-gray-500 text-xs">${error.message}</p>`;
             }
         }
 
@@ -422,7 +400,8 @@
                 sortedFolders.forEach(folder => {
                     const sectionContainer = document.createElement('div');
                     const folderTitle = document.createElement('h2');
-                    folderTitle.className = 'text-3xl font-bold text-slate-900 mb-6 border-b border-gray-200 pb-3 capitalize';
+                    // UPDATED HEADING STYLE
+                    folderTitle.className = 'text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3 capitalize';
                     
                     let displayFolderName = folder;
                     if (folder === 'root') {
@@ -437,7 +416,7 @@
 
                     sectionContainer.appendChild(folderTitle);
                     const folderGrid = document.createElement('div');
-                    folderGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+                    folderGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
                     
                     groupedFiles[folder].forEach(filePath => {
                         const card = createNoteCard(filePath, owner, repo);
@@ -449,11 +428,10 @@
                 });
 
             } else {
-                notesGrid.innerHTML = '<p class="text-slate-500 text-center">No Markdown files (excluding READMEs) found in this repository.</p>';
+                notesGrid.innerHTML = '<p class="text-gray-500 text-center">No Markdown files (excluding READMEs) found in this repository.</p>';
             }
         }
 
-        // Event listeners
         closeViewerBtn.addEventListener('click', () => {
             noteViewer.classList.add('hidden');
             noteViewer.classList.remove('flex');
@@ -471,12 +449,11 @@
             if (link) {
                 e.preventDefault();
                 const targetNoteName = link.getAttribute('data-note-name');
-                const displayTitle = link.innerText; // Get the alias text
+                const displayTitle = link.innerText;
                 findAndOpenNote(targetNoteName, displayTitle);
             }
         });
         
-        // Start loading the page content
         populateNotesPage();
 
     </script>

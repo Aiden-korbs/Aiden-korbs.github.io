@@ -1,70 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aiden - Projects</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .animated-card {
-            transition: all 0.2s ease-in-out;
-        }
-        .animated-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aiden Korbs - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background-color: #2563eb;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link-active::after {
+      width: 100%;
+    }
+    .card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-slate-700">
+<body class="bg-neutral-50 text-gray-800">
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+      <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Korbs</a>
+      <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
+        <a href="index.html" class="nav-link nav-link-active text-blue-600">Projects</a>
+        <a href="notes.html" class="nav-link hover:text-blue-600">Notes</a>
+        <a href="about.html" class="nav-link hover:text-blue-600">About</a>
+        <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+        </a>
+      </div>
+    </nav>
+  </header>
 
-    <header class="bg-white/90 backdrop-blur-sm sticky top-0 z-10 border-b border-gray-200">
-        <nav class="max-w-5xl mx-auto px-10 py-4 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-slate-900 hover:text-teal-600 transition-colors">Aiden</a>
-            <div class="flex items-center space-x-6">
-                <a href="index.html" class="text-lg font-semibold text-teal-600 transition-colors">Projects</a>
-                <a href="notes.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">Notes</a>
-                <a href="about.html" class="text-lg font-medium text-slate-500 hover:text-slate-900 transition-colors">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-slate-600 transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-                </a>
+  <section class="max-w-6xl mx-auto px-6 py-24">
+    <div class="flex flex-col md:flex-row items-center justify-between">
+      <div class="max-w-lg">
+        <h1 class="text-5xl font-extrabold text-gray-900 leading-tight mb-4">Hi, I'm Aiden.</h1>
+        <p class="text-lg text-gray-600 mb-8">A Mechatronics Engineering student passionate about robotics, software, and problem-solving — blending creativity with precision.</p>
+        <a href="#projects" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md text-sm font-semibold hover:bg-blue-700 transition">View My Work</a>
+      </div>
+      <img src="https://via.placeholder.com/400x400" alt="Aiden portrait" class="mt-10 md:mt-0 rounded-lg shadow-lg w-64 md:w-80">
+    </div>
+  </section>
+
+  <section id="projects" class="bg-white border-t border-gray-200 py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-gray-900 mb-12">My Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <a href="pathsync.html" class="card block bg-neutral-100 p-6 rounded-lg">
+            <h3 class="font-bold text-lg mb-2">PathSync Timeline Analyzer</h3>
+            <p class="text-gray-600 text-sm mb-4">A web-based tool to analyze and compare Google Timeline JSON files to find proximity events between multiple individuals.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">JavaScript</span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">HTML</span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">TailwindCSS</span>
             </div>
-        </nav>
-    </header>
-
-    <main class="max-w-5xl mx-auto px-10 py-12">
-        <h1 class="text-4xl font-extrabold text-slate-900 mb-8">My Projects</h1>
-        <div class="space-y-8">
-
-            <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-lg animated-card">
-                <a href="pathsync.html" class="block">
-                    <h3 class="text-xl font-bold text-slate-900">PathSync Timeline Analyzer</h3>
-                    <p class="mt-2 text-slate-600">A web-based tool to analyze and compare Google Timeline JSON files to find proximity events between multiple individuals.</p>
-                </a>
-                <div class="mt-4 flex justify-between items-center">
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-teal-100 text-teal-700 text-xs font-medium px-2.5 py-0.5 rounded-full">JavaScript</span>
-                        <span class="bg-teal-100 text-teal-700 text-xs font-medium px-2.5 py-0.5 rounded-full">HTML</span>
-                        <span class="bg-teal-100 text-teal-700 text-xs font-medium px-2.5 py-0.5 rounded-full">TailwindCSS</span>
-                    </div>
-                    <a href="https://github.com/Aiden-korbs/PathSync" target="_blank" class="text-sm font-medium text-teal-600 hover:text-teal-800 transition-colors whitespace-nowrap">
-                        View Python Source &rarr;
-                    </a>
-                </div>
+            <div class="flex justify-between items-center">
+                <span class="text-blue-600 font-medium text-sm hover:underline">View Project →</span>
+                <span class="text-xs text-gray-500">Also in Python</span>
             </div>
+        </a>
+
+        <div class="card bg-neutral-100 p-6 rounded-lg flex items-center justify-center">
+            <p class="text-gray-400">More projects coming soon...</p>
         </div>
 
-        <footer class="mt-16 border-t border-gray-200">
-            <div class="py-10 text-center text-slate-500">
-                <p>&copy; 2025 Aiden. All Rights Reserved.</p>
-            </div>
-        </footer>
-    </main>
+      </div>
+    </div>
+  </section>
 
+  <footer class="bg-gray-900 text-gray-300 py-10 mt-20">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-sm">© 2025 Aiden Korbs. All Rights Reserved.</p>
+      <a href="https://github.com/Aiden-korbs" target="_blank" class="hover:text-white mt-4 md:mt-0">GitHub →</a>
+    </div>
+  </footer>
 </body>
 </html>
