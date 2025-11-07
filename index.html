@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aiden Corbin - Portfolio</title>
+  <link rel="icon" href="favicon.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +42,9 @@
     }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-700"> <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
+<body class="bg-gray-50 text-gray-700">
+
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
     <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
       <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
       <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
@@ -55,15 +58,23 @@
     </nav>
   </header>
 
-  <section class="max-w-6xl mx-auto px-6 py-24">
-    <div class="flex flex-col md:flex-row items-center justify-between">
-      <div class="max-w-lg">
-        <h1 class="text-5xl font-extrabold text-gray-900 leading-tight mb-4">Hi, I'm Aiden.</h1>
-        <h2 class="text-xl font-semibold text-red-600 mb-6">Mechatronics Engineer | Robotics Enthusiast | Developer</h2>
-        <p class="text-lg text-gray-600 mb-8">I’m a Mechatronics Engineer passionate about robotics, intelligent software, and elegant design — crafting technology that’s both functional and beautiful.</p>
-        <a href="#projects" class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">View My Work</a>
+  <section class="relative bg-cover bg-center" style="background-image: url('PXL_20220825_125406400.jpg');">
+    
+    <div class="absolute inset-0 bg-gray-900/50"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 py-24">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="max-w-lg">
+          
+          <h1 class="text-5xl font-extrabold text-white leading-tight mb-4">Hi, I'm Aiden.</h1>
+          <h2 class="text-xl font-semibold text-red-400 mb-6">Mechatronics and Biomedical Engineering Student</h2>
+          <p class="text-lg text-gray-200 mb-8">I’m a Mechatronics Engineer passionate about robotics, biomechanics, intelligent software.</p>
+          
+          <a href="#projects" class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">View My Work</a>
+        </div>
+        
+        <img src="https://media.licdn.com/dms/image/v2/D5603AQFXq5AFAVb_rg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706409380595?e=1764201600&v=beta&t=-djqMkugRFbX3KyGDeEIUAlf7TY-6msQ8aWzdXRYs5Q" alt="Aiden Corbin portrait" class="mt-10 md:mt-0 rounded-full shadow-lg border-4 border-white w-64 h-64 md:w-80 md:h-80 object-cover">
       </div>
-      <img src="https://media.licdn.com/dms/image/v2/D5603AQFXq5AFAVb_rg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706409380595?e=1764201600&v=beta&t=-djqMkugRFbX3KyGDeEIUAlf7TY-6msQ8aWzdXRYs5Q" alt="Aiden Corbin portrait" class="mt-10 md:mt-0 rounded-full shadow-lg border-4 border-white w-64 h-64 md:w-80 md:h-80 object-cover">
     </div>
   </section>
 
@@ -97,7 +108,7 @@
   </section>
 
   <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
-    © 2025 Aiden Corbin — Built with ❤️ using TailwindCSS
+    © 2025 Aiden Corbin — Built with TailwindCSS
   </footer>
 </body>
 </html>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PathSync: Timeline Proximity Analyzer</title>
+    <title>Aiden Corbin - PathSync</title>
+    <link rel="icon" href="favicon.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +54,7 @@
 
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
         <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-            <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
+          <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
             <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
                 <a href="index.html" class="nav-link nav-link-active text-red-600">Projects</a>
                 <a href="notes.html" class="nav-link text-gray-700 hover:text-red-600">Notes</a>
@@ -278,7 +279,7 @@
         function displayClosestMatch(match, locationName) {
             closestMatchCard.classList.remove('hidden');
             const [file1, file2] = match.files;
-            const { event1, event2, distance_km, time_difference } = match; // Fixed destructuring
+            const { event1, event2, distance_km, time_difference } = match; 
             const event1UTC = moment.utc(event1.timestamp).format('YYYY-MM-DD HH:mm:ss');
             const event2UTC = moment.utc(event2.timestamp).format('YYYY-MM-DD HH:mm:ss');
 
