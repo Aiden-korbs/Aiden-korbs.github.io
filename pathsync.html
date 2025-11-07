@@ -19,11 +19,11 @@
         .nav-link::after {
             content: '';
             position: absolute;
+            bottom: -4px; /* Adjust as needed */
             left: 0;
-            bottom: -4px;
-            width: 0%;
             height: 2px;
-            background-color: #2563eb;
+            width: 0;
+            background-color: #dc2626; /* red-600 */
             transition: width 0.3s ease;
         }
         .nav-link:hover::after,
@@ -34,11 +34,11 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
         .spinner {
-            border-top-color: #2563eb; /* blue-600 */
+            border-top-color: #dc2626; /* red-600 */
             animation: spin 1s linear infinite;
         }
         @keyframes spin {
@@ -49,25 +49,23 @@
         }
     </style>
 </head>
-<body class="bg-neutral-50 text-gray-800">
+<body class="bg-gray-50 text-gray-700">
 
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
         <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
             <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
             <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
-                <a href="index.html" class="nav-link nav-link-active text-blue-600">Projects</a>
-                <a href="notes.html" class="nav-link hover:text-blue-600">Notes</a>
-                <a href="about.html" class="nav-link hover:text-blue-600">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <a href="index.html" class="nav-link nav-link-active text-red-600">Projects</a>
+                <a href="notes.html" class="nav-link text-gray-700 hover:text-red-600">Notes</a>
+                <a href="about.html" class="nav-link text-gray-700 hover:text-red-600">About</a>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-red-600 transition-colors">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
                 </a>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 py-20 min-h-screen">
-        
-        <div class="lg:grid lg:grid-cols-3 lg:gap-12">
+    <main class="max-w-7xl mx-auto px-6 py-20 min-h-screen"> <div class="lg:grid lg:grid-cols-3 lg:gap-12">
         
             <div class="lg:col-span-2 space-y-8">
                 <div class="text-center">
@@ -79,7 +77,7 @@
                     <div>
                         <h2 class="text-lg font-semibold text-gray-800 mb-4">1. Upload Timeline Files</h2>
                         <div id="file-inputs" class="space-y-3"></div>
-                        <button id="add-file-btn" class="w-full mt-3 text-sm font-medium text-blue-600 hover:text-blue-800 transition">+ Add Another File</button>
+                        <button id="add-file-btn" class="w-full mt-3 text-sm font-medium text-red-600 hover:text-red-800 transition">+ Add Another File</button>
                     </div>
                     
                     <div>
@@ -87,35 +85,35 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label for="start-date" class="block text-sm font-medium text-gray-600">Start Date</label>
-                                <input type="date" id="start-date" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                                <input type="date" id="start-date" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm p-2">
                             </div>
                             <div>
                                 <label for="end-date" class="block text-sm font-medium text-gray-600">End Date</label>
-                                <input type="date" id="end-date" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                                <input type="date" id="end-date" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm p-2">
                             </div>
                             <div>
                                 <label for="distance" class="block text-sm font-medium text-gray-600">Distance (meters)</label>
-                                <input type="number" id="distance" value="100" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                                <input type="number" id="distance" value="100" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm p-2">
                             </div>
                             <div>
                                 <label for="time" class="block text-sm font-medium text-gray-600">Time (minutes)</label>
-                                <input type="number" id="time" value="2" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2">
+                                <input type="number" id="time" value="2" class="mt-1 block w-full bg-white border-gray-300 text-gray-800 rounded-md shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm p-2">
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="text-center pt-8 border-t border-gray-200">
-                    <button id="run-analysis" class="w-full md:w-auto bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100 transition disabled:bg-gray-400">
+                    <button id="run-analysis" class="w-full md:w-auto bg-red-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-gray-50 transition disabled:bg-gray-400">
                         Run Analysis
                     </button>
                 </div>
 
                 <div id="results-container" class="space-y-6 pt-8 border-t border-gray-200 hidden">
                     <h2 class="text-3xl font-bold text-center text-gray-900">Analysis Results</h2>
-                    <div id="status" class="text-center text-gray-600 p-4 bg-neutral-100 rounded-md border border-gray-200 shadow-sm"></div>
+                    <div id="status" class="text-center text-gray-600 p-4 bg-white rounded-md border border-gray-200 shadow-sm"></div>
                     <p id="summary" class="text-center font-medium text-lg"></p>
-                    <div id="closest-match-card" class="bg-neutral-100 border border-gray-200 rounded-lg p-6 space-y-4 hidden shadow-sm card">
+                    <div id="closest-match-card" class="bg-white border border-gray-200 rounded-lg p-6 space-y-4 hidden shadow-sm card">
                         <h3 class="text-xl font-semibold text-emerald-600">Closest Match Found</h3>
                         <div id="closest-match-details" class="space-y-3 text-sm"></div>
                     </div>
@@ -124,7 +122,7 @@
 
             <div class="lg:col-span-1 mt-12 lg:mt-0">
                 <div class="sticky top-24">
-                    <div class="bg-neutral-100 p-4 rounded-lg border border-gray-200 shadow-sm card">
+                    <div class="card bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1">
                         <h3 class="font-semibold text-gray-800 flex items-center mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
@@ -135,7 +133,7 @@
                             <div>
                                 <h4 class="font-semibold text-gray-700">Method 1: Google Takeout (Desktop)</h4>
                                 <ol class="list-decimal list-inside mt-2 space-y-1">
-                                    <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-blue-600 hover:underline">Google Takeout</a> website.</li>
+                                    <li>Visit the <a href="https://takeout.google.com/" target="_blank" class="text-red-600 hover:underline">Google Takeout</a> website.</li>
                                     <li>Click "Deselect all", then scroll and select "Location History".</li>
                                     <li>Ensure the format is JSON, then "Create export".</li>
                                 </ol>
@@ -156,11 +154,8 @@
         </div>
     </main>
 
-    <footer class="bg-gray-900 text-gray-300 py-10 mt-20">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-        <p class="text-sm">© 2025 Aiden Corbin. All Rights Reserved.</p>
-        <a href="https://github.com/Aiden-korbs" target="_blank" class="hover:text-white mt-4 md:mt-0">GitHub →</a>
-        </div>
+    <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
+      © 2025 Aiden Corbin — Built with TailwindCSS
     </footer>
 
     <script>
@@ -186,8 +181,7 @@
             
             const label = document.createElement('label');
             label.htmlFor = input.id;
-            // UPDATED BUTTON STYLE
-            label.className = 'cursor-pointer bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-md shadow-sm transition';
+            label.className = 'cursor-pointer bg-red-600 hover:bg-red-700 text-white text-sm font-medium py-2 px-4 rounded-md shadow-sm transition';
             label.textContent = 'Choose File';
 
             const fileNameSpan = document.createElement('span');
@@ -284,7 +278,7 @@
         function displayClosestMatch(match, locationName) {
             closestMatchCard.classList.remove('hidden');
             const [file1, file2] = match.files;
-            const { event1, event2, distance_km, time_difference }.m;
+            const { event1, event2, distance_km, time_difference } = match; // Fixed destructuring
             const event1UTC = moment.utc(event1.timestamp).format('YYYY-MM-DD HH:mm:ss');
             const event2UTC = moment.utc(event2.timestamp).format('YYYY-MM-DD HH:mm:ss');
 

@@ -36,11 +36,11 @@
         .nav-link::after {
             content: '';
             position: absolute;
+            bottom: -4px; /* Adjust as needed */
             left: 0;
-            bottom: -4px;
-            width: 0%;
             height: 2px;
-            background-color: #2563eb;
+            width: 0;
+            background-color: #dc2626; /* red-600 */
             transition: width 0.3s ease;
         }
         .nav-link:hover::after,
@@ -51,12 +51,12 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
         .spinner {
-            border-top-color: #2563eb; /* blue-600 */
+            border-top-color: #dc2626; /* red-600 */
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -77,18 +77,18 @@
             line-height: 1.6;
         }
         #note-viewer-content a {
-            color: #2563eb; /* blue-600 */
+            color: #dc2626; /* red-600 */
             text-decoration: underline;
         }
         #note-viewer-content code {
-            background-color: #dbeafe; /* blue-100 */
-            color: #1d4ed8; /* blue-800 */
+            background-color: #fee2e2; /* red-100 */
+            color: #991b1b; /* red-800 */
             padding: 0.2rem 0.4rem;
             border-radius: 0.25rem;
             font-size: 0.9em;
         }
         #note-viewer-content pre {
-            background-color: #f5f5f5; /* neutral-100 */
+            background-color: #f3f4f6; /* gray-100 */
             border: 1px solid #e5e7eb; /* gray-200 */
             padding: 1rem;
             border-radius: 0.375rem;
@@ -97,7 +97,7 @@
         }
         #note-viewer-content pre code {
             background-color: transparent;
-            color: #404040; /* neutral-700 */
+            color: #374151; /* gray-700 */
         }
         #note-viewer-content ul, #note-viewer-content ol {
             padding-left: 2rem;
@@ -106,10 +106,10 @@
         }
         #note-viewer-content li { margin-bottom: 0.5rem; }
         #note-viewer-content blockquote {
-            border-left: 4px solid #93c5fd; /* blue-300 */
+            border-left: 4px solid #fca5a5; /* red-300 */
             padding-left: 1rem;
             margin: 1.5rem 0;
-            color: #737373; /* neutral-500 */
+            color: #6b7280; /* gray-500 */
             font-style: italic;
         }
         #note-viewer-content table {
@@ -123,22 +123,22 @@
             border: 1px solid #e5e7eb;
         }
         #note-viewer-content th {
-            background-color: #f5f5f5; /* neutral-100 */
+            background-color: #f9fafb; /* gray-50 */
             text-align: left;
             font-weight: 600;
-            color: #404040; /* neutral-700 */
+            color: #374151; /* gray-700 */
         }
         #note-viewer-content tr:nth-child(even) {
-            background-color: #f5f5f5; /* neutral-100 */
+            background-color: #f9fafb; /* gray-50 */
         }
         #note-viewer-content a.obsidian-link {
-            color: #2563eb; /* blue-600 */
+            color: #dc2626; /* red-600 */
             text-decoration: none;
-            border-bottom: 1px dashed #2563eb;
+            border-bottom: 1px dashed #dc2626;
             opacity: 0.8;
         }
         #note-viewer-content a.obsidian-link:hover {
-            color: #1d4ed8; /* blue-800 */
+            color: #b91c1c; /* red-800 */
             border-bottom-style: solid;
             opacity: 1;
         }
@@ -156,33 +156,30 @@
     </style>
 </head>
 
-<body class="bg-neutral-50 text-gray-800">
+<body class="bg-gray-50 text-gray-700">
 
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
         <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
             <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
             <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
-                <a href="index.html" class="nav-link hover:text-blue-600">Projects</a>
-                <a href="notes.html" class="nav-link nav-link-active text-blue-600">Notes</a>
-                <a href="about.html" class="nav-link hover:text-blue-600">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <a href="index.html" class="nav-link text-gray-700 hover:text-red-600">Projects</a>
+                <a href="notes.html" class="nav-link nav-link-active text-red-600">Notes</a>
+                <a href="about.html" class="nav-link text-gray-700 hover:text-red-600">About</a>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-red-600 transition-colors">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
                 </a>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-20 min-h-screen">
+    <main class="max-w-6xl mx-auto px-6 py-24 min-h-screen">
         <h1 id="repo-title" class="text-4xl font-extrabold text-gray-900 mb-4"></h1>
         <p id="repo-description" class="text-gray-600 mb-12"></p>
         <div id="notes-grid" class="space-y-12"></div>
     </main>
 
-    <footer class="bg-gray-900 text-gray-300 py-10 mt-20">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-        <p class="text-sm">© 2025 Aiden Corbin. All Rights Reserved.</p>
-        <a href="https://github.com/Aiden-korbs" target="_blank" class="hover:text-white mt-4 md:mt-0">GitHub →</a>
-        </div>
+    <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
+      © 2025 Aiden Corbin — Built with TailwindCSS
     </footer>
 
 
@@ -196,7 +193,7 @@
                 <div id="note-viewer-content"></div>
             </div>
             <div class="p-4 border-t border-gray-200 text-right">
-                <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">View on GitHub &rarr;</a>
+                <a id="repo-link" href="#" target="_blank" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors">View on GitHub &rarr;</a>
             </div>
         </div>
     </div>
@@ -266,10 +263,8 @@
 
         function createNoteCard(filePath, owner, repo) {
             const card = document.createElement('div');
-            // UPDATED CLASSNAME
-            card.className = 'block cursor-pointer bg-neutral-100 p-6 rounded-lg card';
+            card.className = 'block cursor-pointer bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 card';
             const title = filePath.split('/').pop().replace('.md', '').replace(/[-_]/g, ' ');
-            // UPDATED TEXT COLORS
             card.innerHTML = `<h3 class="text-xl font-bold text-gray-900 capitalize">${title}</h3> <p class="mt-2 text-gray-500 text-xs truncate">File: ${filePath}</p>`;
             card.addEventListener('click', () => fetchAndShowFile(owner, repo, title, filePath));
             return card;
@@ -300,7 +295,7 @@
 
             } catch (error) {
                 console.error("Error fetching file:", error);
-                noteViewerContent.innerHTML = `<p class="text-red-400">Could not load notes.</p><p class="text-gray-500 text-xs">${error.message}</p>`;
+                noteViewerContent.innerHTML = `<p class="text-red-500">Could not load notes.</p><p class="text-gray-500 text-xs">${error.message}</p>`;
             }
         }
 
@@ -327,7 +322,7 @@
 
         async function populateNotesPage() {
             if (!owner || !repo) {
-                notesGrid.innerHTML = '<p class="text-red-400 text-center">Error: Repository owner and name not specified in the URL. Example: ?owner=yourname&repo=yourrepo</p>';
+                notesGrid.innerHTML = '<p class="text-red-500 text-center">Error: Repository owner and name not specified in the URL. Example: ?owner=yourname&repo=yourrepo</p>';
                 document.getElementById('repo-description').textContent = 'Please provide repository details in the URL.';
                 return;
             }
@@ -400,7 +395,6 @@
                 sortedFolders.forEach(folder => {
                     const sectionContainer = document.createElement('div');
                     const folderTitle = document.createElement('h2');
-                    // UPDATED HEADING STYLE
                     folderTitle.className = 'text-3xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3 capitalize';
                     
                     let displayFolderName = folder;
