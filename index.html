@@ -13,7 +13,6 @@
     body {
       font-family: 'Inter', sans-serif;
     }
-    /* This combines the card hover effect from your notes */
     .card {
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -21,8 +20,6 @@
       transform: translateY(-1px);
       box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     }
-    
-    /* This styles the nav-link underline animation */
     .nav-link {
         position: relative;
     }
@@ -40,6 +37,47 @@
     .nav-link-active::after {
         width: 100%;
     }
+    .text-shadow-md {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* --- Animation Keyframes --- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* --- On-Load Animation Classes --- */
+    .animate-fade-in-up {
+      opacity: 0; /* Start hidden */
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    .animate-fade-in-scale {
+      opacity: 0; /* Start hidden */
+      animation: fadeInScale 0.6s ease-out forwards;
+    }
+    
+    /* --- Animation Delays --- */
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-500 { animation-delay: 0.5s; }
+
+    /* --- On-Scroll Animation Classes --- */
+    .fade-in-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
   </style>
 </head>
 <body class="bg-gray-50 text-gray-700">
@@ -60,20 +98,20 @@
 
   <section class="relative bg-cover bg-center" style="background-image: url('PXL_20220825_125406400.jpg');">
     
-    <div class="absolute inset-0 bg-gray-900/50"></div>
+    <div class="absolute inset-0 bg-gray-900/60"></div>
 
     <div class="relative max-w-6xl mx-auto px-6 py-24">
       <div class="flex flex-col md:flex-row items-center justify-between">
         <div class="max-w-lg">
           
-          <h1 class="text-5xl font-extrabold text-white leading-tight mb-4">Hi, I'm Aiden.</h1>
-          <h2 class="text-xl font-semibold text-red-400 mb-6">Mechatronics and Biomedical Engineering Student</h2>
-          <p class="text-lg text-gray-200 mb-8">I’m a Mechatronics Engineer passionate about robotics, biomechanics, intelligent software.</p>
+          <h1 class="text-5xl font-extrabold text-white leading-tight mb-4 text-shadow-md animate-fade-in-up">Hi, I'm Aiden.</h1>
+          <h2 class="text-xl font-semibold text-red-500 mb-6 text-shadow-md animate-fade-in-up delay-100">Mechatronics and Biomedical Engineering Student</h2>
+          <p class="text-lg text-gray-100 mb-8 text-shadow-md animate-fade-in-up delay-200">I’m a Mechatronics Engineer passionate about robotics, biomechanics, intelligent software.</p>
           
-          <a href="#projects" class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">View My Work</a>
+          <a href="#projects" class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors animate-fade-in-up delay-300">View My Work</a>
         </div>
         
-        <img src="https://media.licdn.com/dms/image/v2/D5603AQFXq5AFAVb_rg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706409380595?e=1764201600&v=beta&t=-djqMkugRFbX3KyGDeEIUAlf7TY-6msQ8aWzdXRYs5Q" alt="Aiden Corbin portrait" class="mt-10 md:mt-0 rounded-full shadow-lg border-4 border-white w-64 h-64 md:w-80 md:h-80 object-cover">
+        <img src="https://media.licdn.com/dms/image/v2/D5603AQFXq5AFAVb_rg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706409380595?e=1764201600&v=beta&t=-djqMkugRFbX3KyGDeEIUAlf7TY-6msQ8aWzdXRYs5Q" alt="Aiden Corbin portrait" class="mt-10 md:mt-0 rounded-full shadow-lg border-4 border-white w-64 h-64 md:w-80 md:h-80 object-cover animate-fade-in-scale delay-500">
       </div>
     </div>
   </section>
@@ -82,10 +120,10 @@
 
   <section id="projects" class="bg-white border-t border-gray-100 py-24">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12">My Projects</h2>
+      <h2 class="text-3xl font-bold text-gray-900 mb-12 fade-in-on-scroll">My Projects</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         
-        <a href="pathsync.html" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1">
+        <a href="pathsync.html" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 fade-in-on-scroll">
             <h3 class="font-bold text-lg text-gray-900 mb-2">PathSync Timeline Analyzer</h3>
             <p class="text-gray-600 text-sm mb-4">A web-based tool to analyze and compare Google Timeline JSON files to find proximity events between multiple individuals.</p>
             <div class="flex flex-wrap gap-2 mb-4">
@@ -99,7 +137,19 @@
             </div>
         </a>
 
-        <div class="card bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center">
+        <a href="https://github.com/Aiden-korbs/12v_Battery_Monitor" target="_blank" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 fade-in-on-scroll delay-100">
+            <h3 class="font-bold text-lg text-gray-900 mb-2">12V Battery Monitor</h3>
+            <p class="text-gray-600 text-sm mb-4">An ESP32-based system to monitor 12V battery voltage and current, reporting data locally.</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">C++</span>
+                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">Embedded Systems</span>
+                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">Electronics</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-red-600 font-medium text-sm hover:underline">View on GitHub →</span>
+            </div>
+        </a>
+        <div class="card bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center fade-in-on-scroll delay-200">
             <p class="text-gray-400">More projects coming soon...</p>
         </div>
 
@@ -110,5 +160,34 @@
   <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
     © 2025 Aiden Corbin — Built with TailwindCSS
   </footer>
+
+  <script>
+    // --- JavaScript for On-Scroll Animations ---
+    
+    // Select all elements with the .fade-in-on-scroll class
+    const scrollElements = document.querySelectorAll('.fade-in-on-scroll');
+
+    // Set up the Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // If the element is intersecting (visible in the viewport)
+        if (entry.isIntersecting) {
+          // Add the .is-visible class to trigger the CSS transition
+          entry.target.classList.add('is-visible');
+          // Stop observing the element so the animation doesn't re-run
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1 // Trigger when 10% of the element is visible
+    });
+
+    // Tell the observer to watch each of the selected elements
+    scrollElements.forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
 </body>
 </html>
+```
