@@ -1,0 +1,28 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Base Dark Slate Background -->
+    <rect width="512" height="512" rx="128" fill="#020617"/>
+    
+    <!-- Ambient Glowing Orbs -->
+    <circle cx="150" cy="150" r="140" fill="#dc2626" opacity="0.4" filter="url(#blur)"/>
+    <circle cx="362" cy="362" r="140" fill="#8b5cf6" opacity="0.3" filter="url(#blur)"/>
+    <circle cx="362" cy="150" r="140" fill="#f97316" opacity="0.3" filter="url(#blur)"/>
+    
+    <!-- Glassmorphic Inner Squircle -->
+    <rect x="64" y="64" width="384" height="384" rx="96" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="4"/>
+    
+    <!-- Geometric 'A' Logo -->
+    <path d="M256 160L160 352" stroke="white" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M256 160L352 352" stroke="url(#paint0_linear)" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M196 280H316" stroke="white" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Defs for Gradients and Blurs -->
+    <defs>
+        <filter id="blur" x="-200" y="-200" width="912" height="912" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="60"/>
+        </filter>
+        <linearGradient id="paint0_linear" x1="256" y1="160" x2="352" y2="352" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#ef4444"/>
+            <stop offset="1" stop-color="#f97316"/>
+        </linearGradient>
+    </defs>
+</svg>
