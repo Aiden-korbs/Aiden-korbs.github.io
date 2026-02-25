@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,186 +8,210 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    }
-    .nav-link {
-        position: relative;
-    }
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: -4px; /* Adjust as needed */
-        left: 0;
-        height: 2px;
-        width: 0;
-        background-color: #dc2626; /* red-600 */
-        transition: width 0.3s ease;
-    }
-    .nav-link:hover::after,
-    .nav-link-active::after {
-        width: 100%;
-    }
-    .text-shadow-md {
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    /* --- Animation Keyframes --- */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* --- On-Load Animation Classes --- */
-    .animate-fade-in-up {
-      opacity: 0; /* Start hidden */
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-    .animate-fade-in-scale {
-      opacity: 0; /* Start hidden */
-      animation: fadeInScale 0.6s ease-out forwards;
-    }
+    body { font-family: 'Inter', sans-serif; }
     
-    /* --- Animation Delays --- */
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
-    .delay-500 { animation-delay: 0.5s; }
-
-    /* --- On-Scroll Animation Classes --- */
-    .fade-in-on-scroll {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-    .fade-in-on-scroll.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+    .bg-dots-dark {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
     }
 
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    @keyframes float-delayed {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-delayed { animation: float-delayed 7s ease-in-out 3s infinite; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+        content: ''; position: absolute; bottom: -4px; left: 0;
+        height: 2px; width: 0; background-color: #ef4444; 
+        transition: width 0.3s ease; border-radius: 2px;
+    }
+    .nav-link:hover::after, .nav-link-active::after { width: 100%; }
+    
+    .premium-glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .premium-glass-card:hover {
+        transform: translateY(-6px);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(239, 68, 68, 0.2);
+    }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-700">
+<body class="bg-slate-950 text-slate-400 flex flex-col min-h-screen relative overflow-x-hidden">
 
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
-    <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-      <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
-      <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
-        <a href="index.html" class="nav-link nav-link-active text-red-600">Projects</a>
-        <a href="notes.html" class="nav-link text-gray-700 hover:text-red-600">Notes</a>
-        <a href="about.html" class="nav-link text-gray-700 hover:text-red-600">About</a>
-        <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-red-600 transition-colors">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+  <!-- Ambient Glowing Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-red-600/20 blur-[120px] pointer-events-none animate-float z-0"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px] pointer-events-none animate-float-delayed z-0"></div>
+  <div class="fixed top-[40%] left-[20%] w-[30%] h-[30%] rounded-full bg-orange-500/10 blur-[100px] pointer-events-none animate-float z-0"></div>
+
+  <!-- Floating Pill Navbar -->
+  <header class="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+    <nav class="w-full max-w-4xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 rounded-full flex justify-between items-center px-6 py-3 transition-all">
+      <a href="index.html" class="text-xl font-extrabold text-white tracking-tight drop-shadow-md">Aiden Corbin</a>
+      <div class="flex items-center space-x-6 md:space-x-8 text-xs md:text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <a href="index.html" class="nav-link nav-link-active text-white">Projects</a>
+        <a href="notes.html" class="nav-link hover:text-white transition-colors">Notes</a>
+        <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+        <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-white transition-colors ml-2">
+            <svg class="w-5 h-5 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
         </a>
       </div>
     </nav>
   </header>
 
-  <section class="relative bg-cover bg-center" style="background-image: url('PXL_20220825_125406400.jpg');">
-    
-    <div class="absolute inset-0 bg-gray-900/60"></div>
+  <main class="relative z-10 w-full">
+    <!-- Floaty Hero Section -->
+    <section class="relative border-b border-white/5 overflow-hidden pt-24">
+      <div class="absolute inset-0 bg-dots-dark z-0 opacity-40"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/50 to-slate-950 z-0"></div>
 
-    <div class="relative max-w-6xl mx-auto px-6 py-24">
-      <div class="flex flex-col md:flex-row items-center justify-between">
-        <div class="max-w-lg">
+      <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center justify-between gap-12">
+        <div class="max-w-xl">
+          <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6 tracking-tight drop-shadow-lg">
+            Hi, I'm Aiden.
+          </h1>
+          <h2 class="text-xl md:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400 mb-6 drop-shadow-sm">
+            Mechatronics & Biomedical Engineering
+          </h2>
+          <p class="text-lg text-slate-400 mb-10 leading-relaxed font-light">
+            I build intelligent physical systems, bridging the gap between mechanical engineering, robotics, and robust software architecture.
+          </p>
           
-          <h1 class="text-5xl font-extrabold text-white leading-tight mb-4 text-shadow-md animate-fade-in-up">Hi, I'm Aiden.</h1>
-          <h2 class="text-xl font-semibold text-red-500 mb-6 text-shadow-md animate-fade-in-up delay-100">Mechatronics and Biomedical Engineering Student</h2>
-          <p class="text-lg text-gray-100 mb-8 text-shadow-md animate-fade-in-up delay-200">I’m a Mechatronics Engineer passionate about robotics, biomechanics, intelligent software.</p>
-          
-          <a href="#projects" class="inline-block bg-red-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors animate-fade-in-up delay-300">View My Work</a>
+          <div class="flex flex-wrap gap-4">
+            <a href="#projects" class="inline-flex justify-center items-center bg-gradient-to-r from-red-600 to-red-500 text-white px-8 py-3.5 rounded-full font-medium hover:from-red-500 hover:to-orange-500 transition-all shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:shadow-[0_0_30px_rgba(239,68,68,0.5)] hover:-translate-y-1">
+              View My Work
+            </a>
+            <a href="notes.html" class="inline-flex justify-center items-center bg-white/5 backdrop-blur-md text-white border border-white/10 px-8 py-3.5 rounded-full font-medium hover:bg-white/10 transition-all shadow-lg hover:-translate-y-1">
+              Browse Notes
+            </a>
+          </div>
         </div>
         
-        <img src="https://media.licdn.com/dms/image/v2/D5603AQFXq5AFAVb_rg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706409380595?e=1764201600&v=beta&t=-djqMkugRFbX3KyGDeEIUAlf7TY-6msQ8aWzdXRYs5Q" alt="Aiden Corbin portrait" class="mt-10 md:mt-0 rounded-full shadow-lg border-4 border-white w-64 h-64 md:w-80 md:h-80 object-cover animate-fade-in-scale delay-500">
+        <div class="relative shrink-0 mt-12 md:mt-0 animate-float z-20">
+          <div class="absolute -inset-4 bg-gradient-to-br from-red-500 to-purple-600 rounded-full blur-2xl opacity-40"></div>
+          <img src="Profile.jpeg" 
+               alt="Aiden Corbin" 
+               class="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full shadow-2xl shadow-black border-2 border-white/10">
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="max-w-6xl mx-auto border-gray-200">
-
-  <section id="projects" class="bg-white border-t border-gray-100 py-24">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-gray-900 mb-12 fade-in-on-scroll">My Projects</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Skills Section (NEW) -->
+    <section class="py-20 border-b border-white/5">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-extrabold text-white tracking-tight mb-12 text-center drop-shadow-md">Core Capabilities</h2>
         
-        <a href="pathsync.html" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 fade-in-on-scroll">
-            <h3 class="font-bold text-lg text-gray-900 mb-2">PathSync Timeline Analyzer</h3>
-            <p class="text-gray-600 text-sm mb-4">A web-based tool to analyze and compare Google Timeline JSON files to find proximity events between multiple individuals.</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">JavaScript</span>
-                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">HTML</span>
-                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">TailwindCSS</span>
-            </div>
-            <div class="flex justify-between items-center">
-                <span class="text-red-600 font-medium text-sm hover:underline">View Project →</span>
-                <span class="text-xs text-gray-500">Also in Python</span>
-            </div>
-        </a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="premium-glass-card p-6 rounded-3xl">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+              <span class="p-2 bg-red-500/20 text-red-400 rounded-lg">⚙️</span> Mechatronics
+            </h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Control Systems Design</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Sensor Integration</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Embedded C / C++</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Fusion, CAD & FEA</li>
+            </ul>
+          </div>
+          
+          <div class="premium-glass-card p-6 rounded-3xl">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+              <span class="p-2 bg-blue-500/20 text-blue-400 rounded-lg">💻</span> Software Engineering
+            </h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Python (Data/ML)</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> JavaScript & TypeScript</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> C / C++ Low Level</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Git & Version Control</li>
+            </ul>
+          </div>
 
-        <a href="https://github.com/Aiden-korbs/12v_Battery_Monitor" target="_blank" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 fade-in-on-scroll delay-100">
-            <h3 class="font-bold text-lg text-gray-900 mb-2">12V Battery Monitor</h3>
-            <p class="text-gray-600 text-sm mb-4">An ESP32-based system to monitor 12V battery voltage and current, reporting data locally.</p>
-            <div class="flex flex-wrap gap-2 mb-4">
-                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">C++</span>
-                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">Embedded Systems</span>
-                <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium">Electronics</span>
-            </div>
-            <div class="flex justify-between items-center">
-                <span class="text-red-600 font-medium text-sm hover:underline">View on GitHub →</span>
-            </div>
-        </a>
-        <div class="card bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center fade-in-on-scroll delay-200">
-            <p class="text-gray-400">More projects coming soon...</p>
+          <div class="premium-glass-card p-6 rounded-3xl">
+            <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+              <span class="p-2 bg-purple-500/20 text-purple-400 rounded-lg">🧬</span> Biomedical Engineering
+            </h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Signal Processing</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Biomechanics</li>
+              <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span> Medical Device Design</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section id="projects" class="py-24">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-16">
+            <h2 class="text-4xl font-extrabold text-white tracking-tight drop-shadow-md">Recent Deployments</h2>
         </div>
 
-      </div>
-    </div>
-  </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <a href="pathsync.html" class="premium-glass-card group p-8 rounded-3xl flex flex-col h-full">
+              <div class="flex-grow">
+                  <h3 class="font-bold text-2xl text-white mb-4 group-hover:text-red-400 transition-colors">PathSync Timeline</h3>
+                  <p class="text-slate-400 text-sm leading-relaxed mb-8">A web-based tool to analyze and compare Google Timeline JSON files to find proximity events between multiple individuals.</p>
+              </div>
+              <div>
+                  <div class="flex flex-wrap gap-2 mb-6">
+                      <span class="rounded-full px-4 py-1.5 text-xs bg-white/5 text-slate-300 font-medium">JavaScript</span>
+                      <span class="rounded-full px-4 py-1.5 text-xs bg-white/5 text-slate-300 font-medium">TailwindCSS</span>
+                  </div>
+                  <div class="flex justify-between items-center pt-5 border-t border-white/5">
+                      <span class="text-white font-semibold text-sm group-hover:text-red-400 transition-colors flex items-center gap-2">
+                          View Project <svg class="w-4 h-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                      </span>
+                  </div>
+              </div>
+          </a>
 
-  <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
-    © 2025 Aiden Corbin — Built with TailwindCSS
+          <a href="https://github.com/Aiden-korbs/12v_Battery_Monitor" target="_blank" class="premium-glass-card group p-8 rounded-3xl flex flex-col h-full">
+              <div class="flex-grow">
+                  <h3 class="font-bold text-2xl text-white mb-4 group-hover:text-red-400 transition-colors">12V Battery Monitor</h3>
+                  <p class="text-slate-400 text-sm leading-relaxed mb-8">An ESP32-based system to monitor 12V battery voltage and current, reporting data locally via a web dashboard.</p>
+              </div>
+              <div>
+                  <div class="flex flex-wrap gap-2 mb-6">
+                      <span class="rounded-full px-4 py-1.5 text-xs bg-white/5 text-slate-300 font-medium">C++</span>
+                      <span class="rounded-full px-4 py-1.5 text-xs bg-white/5 text-slate-300 font-medium">ESP32</span>
+                  </div>
+                  <div class="flex justify-between items-center pt-5 border-t border-white/5">
+                      <span class="text-white font-semibold text-sm group-hover:text-red-400 transition-colors flex items-center gap-2">
+                          GitHub <svg class="w-4 h-4 opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                      </span>
+                  </div>
+              </div>
+          </a>
+
+          <div class="bg-white/[0.02] border border-white/10 border-dashed rounded-3xl p-8 flex items-center justify-center backdrop-blur-sm">
+              <p class="text-slate-500 text-sm font-medium tracking-wide">More projects compiling...</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-10 text-center text-sm text-slate-500 border-t border-white/5 bg-slate-950/50 backdrop-blur-md relative z-10">
+    © 2026 Aiden Corbin — Built with TailwindCSS
   </footer>
-
-  <script>
-    // --- JavaScript for On-Scroll Animations ---
-    
-    // Select all elements with the .fade-in-on-scroll class
-    const scrollElements = document.querySelectorAll('.fade-in-on-scroll');
-
-    // Set up the Intersection Observer
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // If the element is intersecting (visible in the viewport)
-        if (entry.isIntersecting) {
-          // Add the .is-visible class to trigger the CSS transition
-          entry.target.classList.add('is-visible');
-          // Stop observing the element so the animation doesn't re-run
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1 // Trigger when 10% of the element is visible
-    });
-
-    // Tell the observer to watch each of the selected elements
-    scrollElements.forEach(el => {
-      observer.observe(el);
-    });
-  </script>
 
 </body>
 </html>
-```

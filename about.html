@@ -1,91 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aiden Corbin - About</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .nav-link {
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; /* Adjust as needed */
-            left: 0;
-            height: 2px;
-            width: 0;
-            background-color: #dc2626; /* red-600 */
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after,
-        .nav-link-active::after {
-            width: 100%;
-        }
-        .animated-tag {
-            display: inline-block;
-            transition: all 0.2s ease-in-out;
-        }
-        .animated-tag:hover {
-            transform: scale(1.05);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - Aiden Corbin</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    .bg-dots-dark {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    @keyframes float-delayed {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-delayed { animation: float-delayed 7s ease-in-out 3s infinite; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+        content: ''; position: absolute; bottom: -4px; left: 0;
+        height: 2px; width: 0; background-color: #ef4444; 
+        transition: width 0.3s ease; border-radius: 2px;
+    }
+    .nav-link:hover::after, .nav-link-active::after { width: 100%; }
+    
+    .premium-glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-700">
+<body class="bg-slate-950 text-slate-400 flex flex-col min-h-screen relative overflow-x-hidden">
 
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
-        <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-          <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
-            <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
-                <a href="index.html" class="nav-link text-gray-700 hover:text-red-600">Projects</a>
-                <a href="notes.html" class="nav-link text-gray-700 hover:text-red-600">Notes</a>
-                <a href="about.html" class="nav-link nav-link-active text-red-600">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-red-600 transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-                </a>
-            </div>
-        </nav>
-    </header>
+  <!-- Ambient Glowing Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-red-600/20 blur-[120px] pointer-events-none animate-float z-0"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 blur-[120px] pointer-events-none animate-float-delayed z-0"></div>
+  
+  <div class="fixed inset-0 bg-dots-dark z-0 opacity-40"></div>
 
-    <main class="max-w-4xl mx-auto px-6 py-24">
-        <div class="space-y-12">
-            <section class="text-center">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900">Hello, I'm Aiden</h1>
-                <p class="mt-4 text-lg text-gray-600">A passionate Mechatronics Engineering student from Brisbane, Australia, with a love for robotics, software development, and solving complex problems.</p>
-            </section>
+  <!-- Floating Pill Navbar -->
+  <header class="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+    <nav class="w-full max-w-4xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 rounded-full flex justify-between items-center px-6 py-3 transition-all">
+      <a href="index.html" class="text-xl font-extrabold text-white tracking-tight drop-shadow-md">Aiden Corbin</a>
+      <div class="flex items-center space-x-6 md:space-x-8 text-xs md:text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <a href="index.html" class="nav-link hover:text-white transition-colors">Projects</a>
+        <a href="notes.html" class="nav-link hover:text-white transition-colors">Notes</a>
+        <a href="about.html" class="nav-link nav-link-active text-white">About</a>
+        <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-white transition-colors ml-2">
+            <svg class="w-5 h-5 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+        </a>
+      </div>
+    </nav>
+  </header>
 
-            <section>
-                <p class="text-gray-600 text-center max-w-2xl mx-auto">
-                    Currently studying at the Queensland University of Technology (QUT), I am driven by the challenge of blending mechanical systems with intelligent software. My journey into engineering is fueled by a curiosity for how things work and a desire to build innovative solutions that can make a tangible impact. This website serves as a living portfolio of my projects, notes, and the skills I'm developing along the way.
-                </p>
-            </section>
-
-            <section>
-                <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">My Skills</h2>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">Python</span>
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">JavaScript</span>
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">C++</span>
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">Robotics</span>
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">CAD</span>
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">HTML & CSS</span>
-                    <span class="rounded-full px-4 py-2 text-sm bg-gray-100 text-gray-700 font-medium animated-tag">Embedded Systems</span>
-                </div>
-            </section>
+  <main class="relative z-10 flex-grow pt-36 pb-24 px-6 w-full max-w-4xl mx-auto">
+    <div class="premium-glass-card p-8 md:p-12 rounded-3xl">
+      <div class="flex flex-col md:flex-row gap-12 items-start">
+        
+        <div class="w-full md:w-1/3 shrink-0">
+          <img src="Profile.jpeg" alt="Aiden Corbin" class="w-full rounded-2xl border border-white/10 shadow-xl object-cover aspect-square">
         </div>
-    </main>
+        
+        <div class="w-full md:w-2/3">
+          <h1 class="text-4xl font-extrabold text-white mb-6">About Me</h1>
+          
+          <div class="space-y-6 text-slate-300 leading-relaxed">
+            <p>
+              Hi, I'm <span class="text-white font-semibold">Aiden Corbin</span>. I'm currently studying a double degree in <strong class="text-red-400">Mechatronics and Biomedical Engineering</strong> at the Queensland University of Technology (QUT).
+            </p>
+            <p>
+              I am fascinated by the intersection of hardware and software. Whether it's developing control systems for robotics, reading biometric sensors, or building web-dashboards to monitor embedded devices, I love creating systems that interact with the physical world.
+            </p>
+            <p>
+              This website serves as my digital garden. It's a place where I document my university projects, personal builds, and host a live rendering of my Markdown notes for easy reference.
+            </p>
+            
+            <h2 class="text-2xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2">Connect</h2>
+            <ul class="space-y-3">
+              <li>
+                <a href="https://github.com/Aiden-korbs" target="_blank" class="flex items-center text-slate-300 hover:text-red-400 transition-colors">
+                  <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/aiden-corbin-57b8b51a5/" target="_blank" class="flex items-center text-slate-300 hover:text-red-400 transition-colors">
+                  <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  LinkedIn
+                </a>
+              </li>
+            </ul>
+          </div>
 
-    <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
-      © 2025 Aiden Corbin — Built with TailwindCSS
-    </footer>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-10 text-center text-sm text-slate-500 border-t border-white/5 bg-slate-950/50 backdrop-blur-md relative z-10 w-full">
+    © 2026 Aiden Corbin — Built with TailwindCSS
+  </footer>
 
 </body>
 </html>

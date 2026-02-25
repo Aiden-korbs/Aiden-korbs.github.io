@@ -1,124 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aiden Corbin - Notes</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .nav-link {
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; /* Adjust as needed */
-            left: 0;
-            height: 2px;
-            width: 0;
-            background-color: #dc2626; /* red-600 */
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after,
-        .nav-link-active::after {
-            width: 100%;
-        }
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-        .animated-tag {
-            display: inline-block;
-            transition: all 0.2s ease-in-out;
-        }
-        .animated-tag:hover {
-            transform: scale(1.05);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aiden Corbin - Notes Collections</title>
+  <link rel="icon" href="favicon.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    .bg-dots-dark {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+        100% { transform: translateY(0px); }
+    }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+        content: ''; position: absolute; bottom: -4px; left: 0;
+        height: 2px; width: 0; background-color: #ef4444; 
+        transition: width 0.3s ease; border-radius: 2px;
+    }
+    .nav-link:hover::after, .nav-link-active::after { width: 100%; }
+    
+    .premium-glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .premium-glass-card:hover {
+        transform: translateY(-6px);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(239, 68, 68, 0.2);
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-700">
+<body class="bg-slate-950 text-slate-400 flex flex-col min-h-screen relative overflow-x-hidden">
 
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
-        <nav class="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
-          <a href="index.html" class="text-2xl font-extrabold text-gray-900 tracking-tight">Aiden Corbin</a>
-            <div class="flex items-center space-x-8 text-sm font-semibold uppercase">
-                <a href="index.html" class="nav-link text-gray-700 hover:text-red-600">Projects</a>
-                <a href="notes.html" class="nav-link nav-link-active text-red-600">Notes</a>
-                <a href="about.html" class="nav-link text-gray-700 hover:text-red-600">About</a>
-                <a href="https://github.com/Aiden-korbs" target="_blank" class="text-gray-400 hover:text-red-600 transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-                </a>
+  <!-- Ambient Glowing Orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-red-600/10 blur-[120px] pointer-events-none animate-float z-0"></div>
+  <div class="fixed top-[40%] right-[10%] w-[30%] h-[30%] rounded-full bg-orange-500/10 blur-[100px] pointer-events-none animate-float z-0"></div>
+  <div class="fixed inset-0 bg-dots-dark z-0 opacity-40"></div>
+
+  <!-- Floating Pill Navbar -->
+  <header class="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+    <nav class="w-full max-w-4xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 rounded-full flex justify-between items-center px-6 py-3 transition-all">
+      <a href="index.html" class="text-xl font-extrabold text-white tracking-tight drop-shadow-md">Aiden Corbin</a>
+      <div class="flex items-center space-x-6 md:space-x-8 text-xs md:text-sm font-semibold uppercase tracking-wider text-slate-300">
+        <a href="index.html" class="nav-link hover:text-white transition-colors">Projects</a>
+        <a href="notes.html" class="nav-link nav-link-active text-white">Notes</a>
+        <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
+        <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-white transition-colors ml-2">
+            <svg class="w-5 h-5 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="relative z-10 w-full max-w-6xl mx-auto px-6 pt-36 pb-24 flex-grow">
+    
+    <div class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">Knowledge Base</h1>
+      <p class="text-slate-400 max-w-2xl text-lg">Select a repository below to dynamically load and render the Markdown notes directly from GitHub.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Notes Repo Card 1 -->
+      <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGH418-Munificant-Passages" class="premium-glass-card group p-8 rounded-3xl flex flex-col h-full">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
             </div>
-        </nav>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-6 py-24">
-        
-        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Notes Collections</h1>
-        <p class="text-gray-600 mb-12">A collection of notes, code snippets, and resources from various projects and university subjects. Select a collection to view all the notes within.</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGH418-Munificant-Passages" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1">
-                <h3 class="text-xl font-bold text-gray-900">EGH418 - Munificant Passages</h3>
-                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGH418 unit, covering topics on Biomechincal systems.</p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">Mechatronics</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">University</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">QUT</span>
-                </div>
-            </a>
-
-            <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH456-HolyGrail" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1">
-                <h3 class="text-xl font-bold text-gray-900">EGH456 - HolyGrail</h3>
-                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGH456 unit, covering topics on mechatronic systems design.</p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">Mechatronics</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">University</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">QUT</span>
-                </div>
-            </a>
-
-            <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH446" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1">
-                <h3 class="text-xl font-bold text-gray-900">EGH446 - Malevolent Texts</h3>
-                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGH446 covering autonomous systems.</p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">Mechatronics</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">University</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">QUT</span>
-                </div>
-            </a>
-
-            <a href="notes_viewer.html?owner=aiden-korbs&repo=EGB319-Bio-Bling" class="card block bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1">
-                <h3 class="text-xl font-bold text-gray-900">EGB319 - Bio - Bling</h3>
-                <p class="mt-2 text-gray-600 text-sm">Notes and resources for the EGB319.</p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">Mechatronics</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">University</span>
-                    <span class="rounded-full px-3 py-1 text-xs bg-gray-100 text-gray-700 font-medium animated-tag">QUT</span>
-                </div>
-            </a>
-            
-            <div class="card bg-white p-6 rounded-lg border border-gray-200 hover:shadow-lg hover:-translate-y-1 flex items-center justify-center">
-                <p class="text-gray-400">More note collections coming soon...</p>
-            </div>
-
+            <h2 class="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">EGB418</h2>
         </div>
-    </main>
+        <p class="text-slate-400 flex-grow mb-6 leading-relaxed">Biomedical Systems</p>
+        <div class="text-sm font-semibold text-white flex items-center gap-2 mt-auto">
+            Open Repository <svg class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </div>
+      </a>
 
-    <footer class="mt-24 py-8 text-center text-sm text-gray-500 border-t border-gray-200">
-      © 2025 Aiden Corbin — Built with TailwindCSS
-    </footer>
+      <!-- Notes Repo Card 2 -->
+      <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGH456-HolyGrail" class="premium-glass-card group p-8 rounded-3xl flex flex-col h-full">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-white group-hover:text-orange-400 transition-colors">EGH456</h2>
+        </div>
+        <p class="text-slate-400 flex-grow mb-6 leading-relaxed">Embedded Systems</p>
+        <div class="text-sm font-semibold text-white flex items-center gap-2 mt-auto">
+            Open Repository <svg class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </div>
+      </a>
+      
+      <!-- Notes Repo Card 3 -->
+      <a href="notes_viewer.html?owner=Aiden-korbs&repo=EGB319-Bio-Bling/tree/main/EGB319" class="premium-glass-card group p-8 rounded-3xl flex flex-col h-full">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">EGB319</h2>
+        </div>
+        <p class="text-slate-400 flex-grow mb-6 leading-relaxed">Biomedical Design</p>
+        <div class="text-sm font-semibold text-white flex items-center gap-2 mt-auto">
+            Open Repository <svg class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </div>
+      </a>
+
+      <!-- Notes Repo Card 4 -->
+      <a href="notes_viewer.html?owner=aiden-korbs&repo=EGH446" class="premium-glass-card group p-8 rounded-3xl flex flex-col h-full">
+        <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+            </div>
+            <h2 class="text-2xl font-bold text-white group-hover:text-orange-400 transition-colors">EGH456</h2>
+        </div>
+        <p class="text-slate-400 flex-grow mb-6 leading-relaxed">Autonomous Systems</p>
+        <div class="text-sm font-semibold text-white flex items-center gap-2 mt-auto">
+            Open Repository <svg class="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer class="py-10 text-center text-sm text-slate-500 border-t border-white/5 bg-slate-950/50 backdrop-blur-md relative z-10 w-full">
+    © 2026 Aiden Corbin — Built with TailwindCSS
+  </footer>
 
 </body>
 </html>
