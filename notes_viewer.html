@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
         window.MathJax = {
@@ -25,6 +25,7 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'Fira Code', monospace; }
         
         .bg-dots-dark {
           background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
@@ -46,113 +47,182 @@
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
-        .premium-glass-card:hover {
-            transform: translateY(-6px);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(239, 68, 68, 0.2);
-        }
+
+        /* Custom Scrollbars for the panes */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
         .spinner { border-top-color: #ef4444; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
         /* Dark Mode Markdown styles */
-        #note-viewer-content h1, #note-viewer-content h2, #note-viewer-content h3 {
-            color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 0.5rem; margin-top: 1.5rem; margin-bottom: 1rem;
-        }
-        #note-viewer-content p { margin-bottom: 1rem; color: #cbd5e1; line-height: 1.6; }
-        #note-viewer-content a { color: #f87171; text-decoration: underline; }
-        #note-viewer-content code { background-color: rgba(255,255,255,0.1); color: #f87171; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-size: 0.9em; }
-        #note-viewer-content pre { background-color: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 1rem; border-radius: 0.75rem; overflow-x: auto; margin-bottom: 1rem; }
-        #note-viewer-content pre code { background-color: transparent; color: #e2e8f0; }
-        #note-viewer-content ul, #note-viewer-content ol { padding-left: 2rem; margin-bottom: 1rem; color: #cbd5e1; }
+        #note-viewer-content { color: #cbd5e1; font-size: 1.05rem; line-height: 1.7; }
+        #note-viewer-content h1 { color: #ffffff; font-size: 2.25rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; margin-top: 2rem; margin-bottom: 1.5rem; letter-spacing: -0.025em; }
+        #note-viewer-content h2 { color: #f8fafc; font-size: 1.8rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.25rem; }
+        #note-viewer-content h3 { color: #f1f5f9; font-size: 1.4rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; }
+        #note-viewer-content p { margin-bottom: 1.25rem; }
+        #note-viewer-content a { color: #f87171; text-decoration: underline; text-decoration-color: rgba(248,113,113,0.4); text-underline-offset: 4px; transition: all 0.2s; }
+        #note-viewer-content a:hover { text-decoration-color: #f87171; }
+        #note-viewer-content code { background-color: rgba(239,68,68,0.1); color: #fca5a5; padding: 0.2rem 0.4rem; border-radius: 0.375rem; font-family: 'Fira Code', monospace; font-size: 0.85em; }
+        #note-viewer-content pre { background-color: #0f172a; border: 1px solid rgba(255,255,255,0.1); padding: 1.25rem; border-radius: 0.75rem; overflow-x: auto; margin-top: 1.5rem; margin-bottom: 1.5rem; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); }
+        #note-viewer-content pre code { background-color: transparent; color: #e2e8f0; padding: 0; }
+        #note-viewer-content ul, #note-viewer-content ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
         #note-viewer-content li { margin-bottom: 0.5rem; }
-        #note-viewer-content blockquote { border-left: 4px solid #f87171; padding-left: 1rem; margin: 1.5rem 0; color: #94a3b8; font-style: italic; }
-        #note-viewer-content table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; border: 1px solid rgba(255,255,255,0.1); }
-        #note-viewer-content th, #note-viewer-content td { padding: 0.75rem; border: 1px solid rgba(255,255,255,0.1); }
+        #note-viewer-content li::marker { color: #64748b; }
+        #note-viewer-content blockquote { border-left: 4px solid #ef4444; background: linear-gradient(to right, rgba(239,68,68,0.1), transparent); padding: 1rem 1.5rem; margin: 1.5rem 0; color: #94a3b8; font-style: italic; border-radius: 0 0.5rem 0.5rem 0; }
+        #note-viewer-content table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem; overflow: hidden; }
+        #note-viewer-content th, #note-viewer-content td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
         #note-viewer-content th { background-color: rgba(255,255,255,0.05); text-align: left; font-weight: 600; color: #ffffff; }
-        #note-viewer-content tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
-        #note-viewer-content a.obsidian-link { color: #f87171; text-decoration: none; border-bottom: 1px dashed #f87171; opacity: 0.8; }
-        #note-viewer-content a.obsidian-link:hover { color: #ef4444; border-bottom-style: solid; opacity: 1; }
+        #note-viewer-content tr:last-child td { border-bottom: none; }
+        #note-viewer-content img { max-width: 100%; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.1); margin: 1.5rem 0; }
+        
+        #note-viewer-content a.obsidian-link { color: #fca5a5; text-decoration: none; border-bottom: 1px dashed #ef4444; opacity: 0.9; font-weight: 500; }
+        #note-viewer-content a.obsidian-link:hover { color: #f87171; border-bottom-style: solid; opacity: 1; }
 
-        mjx-container { font-size: 1.05em; color: #e2e8f0; }
+        mjx-container { font-size: 1.1em; color: #e2e8f0; }
+        mjx-container[jax="CHTML"][display="true"] { margin: 2rem 0; overflow-x: auto; padding: 1rem 0; }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 
-<body class="bg-slate-950 text-slate-400 relative overflow-x-hidden min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-400 relative overflow-x-hidden h-screen flex flex-col">
 
     <!-- Ambient Glowing Orbs -->
     <div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-red-600/10 blur-[120px] pointer-events-none animate-float z-0"></div>
-    <div class="fixed top-[40%] right-[10%] w-[30%] h-[30%] rounded-full bg-orange-500/10 blur-[100px] pointer-events-none animate-float z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[30%] h-[30%] rounded-full bg-orange-500/10 blur-[100px] pointer-events-none animate-float z-0"></div>
     <div class="fixed inset-0 bg-dots-dark z-0 opacity-40"></div>
 
     <!-- Floating Pill Navbar -->
     <header class="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
-      <nav class="w-full max-w-4xl bg-slate-900/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 rounded-full flex justify-between items-center px-6 py-3 transition-all">
+      <nav class="w-full max-w-4xl bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50 rounded-full flex justify-between items-center px-6 py-3 transition-all">
         <a href="index.html" class="text-xl font-extrabold text-white tracking-tight drop-shadow-md">Aiden Corbin</a>
         <div class="flex items-center space-x-6 md:space-x-8 text-xs md:text-sm font-semibold uppercase tracking-wider text-slate-300">
           <a href="index.html" class="nav-link hover:text-white transition-colors">Projects</a>
           <a href="notes.html" class="nav-link nav-link-active text-white">Notes</a>
           <a href="about.html" class="nav-link hover:text-white transition-colors">About</a>
-          <a href="https://github.com/Aiden-korbs" target="_blank" class="text-slate-400 hover:text-white transition-colors ml-2">
-              <svg class="w-5 h-5 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
-          </a>
         </div>
       </nav>
     </header>
 
-    <main class="relative z-10 max-w-6xl mx-auto px-6 pt-36 pb-24 flex-grow w-full">
-        <div class="mb-12">
-            <a href="notes.html" class="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-white transition-colors mb-4">&larr; Back to Collections</a>
-            <h1 id="repo-title" class="text-4xl font-extrabold text-white mb-4">Notes Viewer</h1>
-            <p id="repo-description" class="text-slate-400">Specify a repository in the URL to view its notes.</p>
-        </div>
-        <div id="notes-grid" class="space-y-12"></div>
+    <!-- Two-Pane Integrated Layout -->
+    <main class="relative z-10 w-full max-w-[90rem] mx-auto px-4 md:px-6 pt-28 pb-6 flex-grow flex flex-col lg:flex-row gap-6 h-full overflow-hidden">
+        
+        <!-- Left Pane: Sidebar (File Tree) -->
+        <aside class="w-full lg:w-80 flex-shrink-0 premium-glass-card rounded-3xl flex flex-col overflow-hidden h-[40vh] lg:h-full transition-all">
+            <div class="p-6 border-b border-white/10 bg-white/[0.02]">
+                <a href="notes.html" class="inline-flex items-center text-xs font-semibold text-slate-500 hover:text-white transition-colors mb-3">&larr; Back to Collections</a>
+                <h1 id="repo-title" class="text-2xl font-extrabold text-white tracking-tight truncate">Loading Repo...</h1>
+                <p id="repo-description" class="text-xs text-slate-500 mt-1 truncate">Fetching notes data</p>
+            </div>
+            
+            <div class="p-4 overflow-y-auto custom-scrollbar flex-grow" id="sidebar-content">
+                <div class="flex justify-center items-center h-20">
+                    <div class="spinner w-6 h-6 border-2 rounded-full"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Pane: Main Reading Canvas -->
+        <section class="flex-grow premium-glass-card rounded-3xl flex flex-col overflow-hidden h-[50vh] lg:h-full relative bg-slate-950/40">
+            
+            <!-- Reading Header -->
+            <div class="p-6 md:px-10 border-b border-white/10 bg-white/[0.02] flex justify-between items-center z-10 sticky top-0 backdrop-blur-md">
+                <div class="overflow-hidden">
+                    <p id="current-folder" class="text-xs font-mono text-slate-500 mb-1 truncate"></p>
+                    <h2 id="note-viewer-title" class="text-xl md:text-2xl font-bold text-white truncate">Select a Note</h2>
+                </div>
+                <a id="repo-link" href="#" target="_blank" class="hidden shrink-0 ml-4 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition-colors items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg>
+                    <span class="hidden sm:inline">Source</span>
+                </a>
+            </div>
+            
+            <!-- Markdown Content -->
+            <div class="p-6 md:p-10 overflow-y-auto custom-scrollbar flex-grow scroll-smooth" id="scroll-container">
+                <div class="max-w-4xl mx-auto w-full">
+                    <div id="note-viewer-content" class="min-h-full">
+                        <div class="h-full flex flex-col items-center justify-center text-slate-500 py-20 opacity-50">
+                            <svg class="w-16 h-16 mb-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            <p>Select a document from the sidebar to start reading.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="py-10 text-center text-sm text-slate-500 border-t border-white/5 bg-slate-950/50 backdrop-blur-md relative z-10 w-full mt-auto">
-      © 2026 Aiden Corbin — Built with TailwindCSS
-    </footer>
-
-    <!-- Dark Glassmorphism Modal -->
-    <div id="note-viewer" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[100] hidden items-center justify-center p-4 md:p-8">
-        <div class="bg-slate-900 border border-white/10 rounded-3xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden relative">
-            <!-- Modal ambient glow -->
-            <div class="absolute top-0 right-0 w-64 h-64 bg-red-600/10 blur-[80px] rounded-full pointer-events-none"></div>
-            
-            <div class="flex justify-between items-center p-6 border-b border-white/10 relative z-10">
-                <h2 id="note-viewer-title" class="text-xl font-bold text-white"></h2>
-                <button id="close-viewer-btn" class="text-slate-500 hover:text-white transition-colors text-3xl leading-none">&times;</button>
-            </div>
-            <div class="p-8 overflow-y-auto relative z-10 custom-scrollbar">
-                <div id="note-viewer-content"></div>
-            </div>
-            <div class="p-6 border-t border-white/10 bg-slate-900/50 text-right relative z-10">
-                <a id="repo-link" href="#" target="_blank" class="text-sm font-semibold text-red-400 hover:text-red-300 transition-colors">View Source on GitHub &rarr;</a>
-            </div>
-        </div>
-    </div>
-
     <script>
-        const notesGrid = document.getElementById('notes-grid');
-        const noteViewer = document.getElementById('note-viewer');
+        const sidebarContent = document.getElementById('sidebar-content');
         const noteViewerTitle = document.getElementById('note-viewer-title');
         const noteViewerContent = document.getElementById('note-viewer-content');
-        const closeViewerBtn = document.getElementById('close-viewer-btn');
+        const currentFolderEl = document.getElementById('current-folder');
         const repoLink = document.getElementById('repo-link');
+        const scrollContainer = document.getElementById('scroll-container');
 
         let allMdFiles = [];
         let currentOwner = '';
         let currentRepo = '';
         let defaultBranchName = 'main';
 
-        const showdownConverter = new showdown.Converter({
-            tables: true, tasklists: true, simplifiedAutoLink: true, 
-            strikethrough: true, ghCompatibleHeaderId: true, literalMidWordUnderscores: true
-        });
+        // MathJax Protection Extension to prevent Showdown from destroying math formatting
+        let mathBlocks = [];
+        showdown.extension('mathjax', () => [
+            {
+                type: 'lang',
+                regex: /\$\$([\s\S]+?)\$\$/g, 
+                replace: (match) => {
+                    mathBlocks.push(match);
+                    return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+                }
+            },
+            {
+                type: 'lang',
+                regex: /\\\[([\s\S]+?)\\\]/g, 
+                replace: (match) => {
+                    mathBlocks.push(match);
+                    return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+                }
+            },
+            {
+                type: 'lang',
+                regex: /\\\((.+?)\\\)/g, 
+                replace: (match) => {
+                    mathBlocks.push(match);
+                    return `%%MATH_INLINE_${mathBlocks.length - 1}%%`;
+                }
+            },
+            {
+                type: 'lang',
+                regex: /\$([^ \n][^\n]*?[^ \n])\$/g, 
+                replace: (match) => {
+                    mathBlocks.push(match);
+                    return `%%MATH_INLINE_${mathBlocks.length - 1}%%`;
+                }
+            },
+            {
+                type: 'lang',
+                regex: /\$([^ \n])\$/g, 
+                replace: (match) => {
+                    mathBlocks.push(match);
+                    return `%%MATH_INLINE_${mathBlocks.length - 1}%%`;
+                }
+            },
+            {
+                type: 'output',
+                regex: /%%MATH_(BLOCK|INLINE)_(\d+)%%/g, 
+                replace: (match, type, index) => {
+                    return mathBlocks[index];
+                }
+            }
+        ]);
 
         showdown.extension('obsidianlinks', () => [{
             type: 'lang',
@@ -163,7 +233,21 @@
                 return `<a href="#" class="obsidian-link" data-note-name="${noteName}">${displayText}</a>`;
             }
         }]);
-        showdownConverter.addExtension('obsidianlinks');
+
+        const showdownConverter = new showdown.Converter({
+            tables: true, 
+            tasklists: true, 
+            simplifiedAutoLink: true, 
+            strikethrough: true, 
+            ghCompatibleHeaderId: true, 
+            literalMidWordUnderscores: true,
+            extensions: ['mathjax', 'obsidianlinks']
+        });
+
+        // Helper function to safely generate an ID from a file path containing Unicode characters
+        function getSafeId(str) {
+            return encodeURIComponent(str).replace(/[^a-zA-Z0-9]/g, '_');
+        }
 
         const urlParams = new URLSearchParams(window.location.search);
         currentOwner = urlParams.get('owner');
@@ -184,23 +268,23 @@
                 currentRepo = rawRepo;
             }
             
-            document.getElementById('repo-title').textContent = targetFolder ? `Notes: ${currentRepo} / ${targetFolder}` : `Notes: ${currentRepo}`;
-            document.getElementById('repo-description').textContent = `Browsing Markdown notes in '${currentRepo}'.`;
+            document.getElementById('repo-title').textContent = currentRepo.toUpperCase();
+            document.getElementById('repo-description').textContent = targetFolder ? `/${targetFolder}` : 'Root Directory';
         }
 
         async function getMdFilesFromRepo(owner, repoName, folderPath) {
             try {
                 const branchResponse = await fetch(`https://api.github.com/repos/${owner}/${repoName}`);
                 if (!branchResponse.ok) {
-                    if (branchResponse.status === 404) throw new Error("Repository not found. It might be Private.");
-                    if (branchResponse.status === 403) throw new Error("GitHub API rate limit exceeded.");
-                    throw new Error(`Could not fetch repo info. Status: ${branchResponse.status}`);
+                    if (branchResponse.status === 404) throw new Error("Repository not found or Private.");
+                    if (branchResponse.status === 403) throw new Error("API rate limit exceeded.");
+                    throw new Error(`Status: ${branchResponse.status}`);
                 }
                 const branchData = await branchResponse.json();
                 defaultBranchName = branchData.default_branch;
 
                 const treeResponse = await fetch(`https://api.github.com/repos/${owner}/${repoName}/git/trees/${defaultBranchName}?recursive=1`);
-                if (!treeResponse.ok) throw new Error(`Could not fetch repo tree. Status: ${treeResponse.status}`);
+                if (!treeResponse.ok) throw new Error(`Tree fetch failed: ${treeResponse.status}`);
                 const treeData = await treeResponse.json();
 
                 return treeData.tree
@@ -216,29 +300,69 @@
             }
         }
 
-        function createNoteCard(filePath, owner, repo) {
-            const card = document.createElement('div');
-            // Updated to Premium Glass Card styles
-            card.className = 'cursor-pointer premium-glass-card group p-6 rounded-3xl flex flex-col h-full';
-            const title = filePath.split('/').pop().replace('.md', '').replace(/[-_]/g, ' ');
-            card.innerHTML = `
-                <div class="flex-grow">
-                    <h3 class="font-bold text-xl text-white group-hover:text-red-400 transition-colors capitalize mb-2">${title}</h3>
-                </div>
-                <div class="pt-4 border-t border-white/5 mt-4">
-                    <p class="text-slate-500 font-mono text-xs truncate">> ${filePath}</p>
-                </div>
+        function createSidebarItem(filePath, title, folderPath) {
+            const fileId = getSafeId(filePath); // Safely encode unicode/emojis
+            const item = document.createElement('div');
+            item.className = 'group flex items-center gap-3 p-2.5 rounded-xl cursor-pointer transition-all mb-1 text-sm border border-transparent hover:bg-white/5 hover:text-white text-slate-400';
+            item.id = `nav-${fileId}`;
+            
+            item.innerHTML = `
+                <svg class="w-4 h-4 opacity-50 shrink-0 group-hover:text-red-400 group-hover:opacity-100 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span class="truncate font-medium">${title}</span>
             `;
-            card.addEventListener('click', () => fetchAndShowFile(owner, repo, title, filePath));
-            return card;
+            
+            item.addEventListener('click', () => {
+                setActiveState(fileId);
+                fetchAndShowFile(currentOwner, currentRepo, title, filePath, folderPath);
+                
+                // On mobile, scroll down to content when clicked
+                if (window.innerWidth < 1024) {
+                    setTimeout(() => {
+                        document.querySelector('section').scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            });
+            return item;
         }
 
-        async function fetchAndShowFile(owner, repoName, title, filePath) {
+        function setActiveState(fileId) {
+            // Remove active from all
+            document.querySelectorAll('[id^="nav-"]').forEach(el => {
+                el.classList.remove('bg-red-500/10', 'text-red-400', 'border-red-500/20');
+                el.classList.add('text-slate-400', 'border-transparent', 'hover:bg-white/5', 'hover:text-white');
+                el.querySelector('svg').classList.remove('text-red-400', 'opacity-100');
+                el.querySelector('svg').classList.add('opacity-50');
+            });
+            
+            // Add to selected
+            const activeEl = document.getElementById(`nav-${fileId}`);
+            if (activeEl) {
+                activeEl.classList.remove('text-slate-400', 'border-transparent', 'hover:bg-white/5', 'hover:text-white');
+                activeEl.classList.add('bg-red-500/10', 'text-red-400', 'border-red-500/20');
+                activeEl.querySelector('svg').classList.remove('opacity-50');
+                activeEl.querySelector('svg').classList.add('text-red-400', 'opacity-100');
+            }
+        }
+
+        async function fetchAndShowFile(owner, repoName, title, filePath, folderPath) {
+            // UI Loading state
             noteViewerTitle.textContent = title;
-            noteViewerContent.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div></div>';
+            currentFolderEl.innerHTML = folderPath === 'root' ? '~ / root' : `~ / ${folderPath.replace(/\//g, ' / ')}`;
+            repoLink.classList.remove('hidden');
+            repoLink.classList.add('flex');
             repoLink.href = `https://github.com/${owner}/${repoName}/blob/${defaultBranchName}/${filePath}`;
-            noteViewer.classList.remove('hidden');
-            noteViewer.classList.add('flex');
+            
+            noteViewerContent.classList.remove('fade-in');
+            noteViewerContent.innerHTML = `
+                <div class="h-64 flex flex-col items-center justify-center">
+                    <div class="spinner w-8 h-8 border-2 rounded-full mb-4"></div>
+                    <p class="text-sm font-mono text-slate-500">> decrypting markdown...</p>
+                </div>`;
+            
+            // Reset scroll
+            scrollContainer.scrollTop = 0;
 
             try {
                 const response = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/${filePath}`);
@@ -250,10 +374,22 @@
                 for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
                 const markdownContent = new TextDecoder('utf-8').decode(bytes);
 
+                // Reset mathBlocks for the new file rendering
+                mathBlocks = [];
+
+                // Render content and trigger animation
                 noteViewerContent.innerHTML = showdownConverter.makeHtml(markdownContent);
-                if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([noteViewerContent]);
+                noteViewerContent.classList.add('fade-in');
+
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    window.MathJax.typesetPromise([noteViewerContent]);
+                }
             } catch (error) {
-                noteViewerContent.innerHTML = `<p class="text-red-400 font-semibold mb-2">Could not load notes.</p><p class="text-slate-500 text-sm">${error.message}</p>`;
+                noteViewerContent.innerHTML = `
+                    <div class="p-6 bg-red-500/10 border border-red-500/20 rounded-xl text-center mt-10">
+                        <p class="text-red-400 font-bold mb-2">Decryption Failed</p>
+                        <p class="text-slate-400 text-sm">${error.message}</p>
+                    </div>`;
             }
         }
 
@@ -262,31 +398,37 @@
             const targetNormalized = normalize(noteName);
             
             let foundPath = null;
+            let foundFolder = null;
             for (const filePath of allMdFiles) {
                 const fileName = filePath.split('/').pop().replace('.md', '');
                 if (normalize(fileName) === targetNormalized) {
                     foundPath = filePath;
+                    const parts = filePath.split('/');
+                    foundFolder = parts.length > 1 ? parts.slice(0, -1).join('/') : 'root';
                     break;
                 }
             }
-            if (foundPath) fetchAndShowFile(currentOwner, currentRepo, displayTitle, foundPath);
-            else alert(`Note not found: "${noteName}"`);
+            if (foundPath) {
+                const fileId = getSafeId(foundPath); // Safely encode unicode/emojis
+                setActiveState(fileId);
+                fetchAndShowFile(currentOwner, currentRepo, displayTitle, foundPath, foundFolder);
+            } else {
+                alert(`Note not found: "${noteName}"`);
+            }
         }
 
-        async function populateNotesPage() {
+        async function populateSidebar() {
             if (!currentOwner || !currentRepo) {
-                notesGrid.innerHTML = '<p class="text-red-400 text-center font-semibold">Error: Repository not specified.</p>';
+                sidebarContent.innerHTML = '<p class="text-red-400 text-sm p-4">Error: Repository not specified.</p>';
                 return;
             }
 
-            notesGrid.innerHTML = '<div class="flex justify-center items-center h-48"><div class="spinner w-8 h-8 border-4 rounded-full"></div><p class="ml-4 text-slate-400 font-medium">Scanning repository...</p></div>';
-            
             try {
                 const mdFiles = await getMdFilesFromRepo(currentOwner, currentRepo, targetFolder);
                 allMdFiles = mdFiles;
                 
                 if (mdFiles.length > 0) {
-                    notesGrid.innerHTML = '';
+                    sidebarContent.innerHTML = '';
                     
                     const groupedFiles = mdFiles.reduce((acc, filePath) => {
                         const parts = filePath.split('/');
@@ -315,61 +457,46 @@
                     }
 
                     const sortedFolders = Object.keys(groupedFiles).sort(naturalSort);
-                    let commonPrefix = '';
-                    const nonRootFolders = sortedFolders.filter(f => f !== 'root');
-
-                    if (nonRootFolders.length > 0) {
-                        const paths = nonRootFolders.map(f => f.split('/'));
-                        const minLength = Math.min(...paths.map(p => p.length));
-                        let prefixComponents = [];
-                        for (let i = 0; i < minLength; i++) {
-                            if (paths.every(p => p[i] === paths[0][i])) prefixComponents.push(paths[0][i]);
-                            else break;
-                        }
-                        if (prefixComponents.length > 0) {
-                            const tempPrefix = prefixComponents.join('/') + '/';
-                            if (nonRootFolders.every(f => f.startsWith(tempPrefix) || f === prefixComponents.join('/'))) {
-                                 commonPrefix = tempPrefix;
-                            }
-                        }
-                    }
+                    let firstFileLoaded = false;
 
                     sortedFolders.forEach(folder => {
-                        const sectionContainer = document.createElement('div');
-                        const folderTitle = document.createElement('h2');
-                        // Styled folder headings
-                        folderTitle.className = 'text-2xl font-bold text-white mb-6 border-b border-white/10 pb-3 capitalize drop-shadow-sm';
-                        
-                        let displayFolderName = folder;
-                        if (folder === 'root') displayFolderName = 'General Notes';
-                        else if (commonPrefix && folder.startsWith(commonPrefix)) {
-                            displayFolderName = folder.substring(commonPrefix.length);
-                            if (displayFolderName === '') displayFolderName = folder; 
+                        // Create Folder Heading
+                        if (folder !== 'root' || sortedFolders.length > 1) {
+                            const folderTitle = document.createElement('h3');
+                            folderTitle.className = 'text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2 mt-6 px-2';
+                            let displayFolderName = folder === 'root' ? 'General' : folder.split('/').pop();
+                            folderTitle.textContent = displayFolderName.replace(/[-_]/g, ' ');
+                            sidebarContent.appendChild(folderTitle);
                         }
-                        folderTitle.textContent = displayFolderName.replace(/[-_]/g, ' ');
 
-                        sectionContainer.appendChild(folderTitle);
-                        const folderGrid = document.createElement('div');
-                        folderGrid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
-                        
-                        groupedFiles[folder].forEach(filePath => folderGrid.appendChild(createNoteCard(filePath, currentOwner, currentRepo)));
-
-                        sectionContainer.appendChild(folderGrid);
-                        notesGrid.appendChild(sectionContainer);
+                        // Add files under heading
+                        groupedFiles[folder].forEach(filePath => {
+                            const title = filePath.split('/').pop().replace('.md', '').replace(/[-_]/g, ' ');
+                            const item = createSidebarItem(filePath, title, folder);
+                            sidebarContent.appendChild(item);
+                            
+                            // Auto-load first file
+                            if (!firstFileLoaded) {
+                                firstFileLoaded = true;
+                                setTimeout(() => {
+                                    item.click(); 
+                                }, 100);
+                            }
+                        });
                     });
                 } else {
-                    notesGrid.innerHTML = '<p class="text-slate-500 text-center bg-white/5 p-8 rounded-2xl border border-white/10">No Markdown files found.</p>';
+                    sidebarContent.innerHTML = '<p class="text-slate-500 text-sm p-4">No Markdown files found.</p>';
                 }
             } catch (error) {
-                notesGrid.innerHTML = `<div class="bg-red-500/10 border border-red-500/20 p-6 rounded-2xl">
-                    <p class="text-red-400 font-bold mb-1">Failed to load repository</p>
-                    <p class="text-slate-400 text-sm">${error.message}</p>
-                </div>`;
+                sidebarContent.innerHTML = `
+                    <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
+                        <p class="text-red-400 font-bold mb-1 text-sm">Failed to load</p>
+                        <p class="text-slate-400 text-xs">${error.message}</p>
+                    </div>`;
             }
         }
 
-        closeViewerBtn.addEventListener('click', () => { noteViewer.classList.add('hidden'); noteViewer.classList.remove('flex'); });
-        noteViewer.addEventListener('click', (e) => { if (e.target === noteViewer) { noteViewer.classList.add('hidden'); noteViewer.classList.remove('flex'); } });
+        // Obsidian Link Click Handler
         noteViewerContent.addEventListener('click', (e) => {
             const link = e.target.closest('a.obsidian-link');
             if (link) {
@@ -378,7 +505,7 @@
             }
         });
         
-        populateNotesPage();
+        populateSidebar();
     </script>
 </body>
 </html>
